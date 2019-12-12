@@ -14,7 +14,6 @@ client.categories = fs.readdirSync('./commands/');
 
 client.on('ready', () => {
   console.log(`Hi, ${client.user.username} is now online!`);
-
   client.user.setPresence({
     status: 'online',
     game: {
