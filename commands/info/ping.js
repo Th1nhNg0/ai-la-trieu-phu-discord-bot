@@ -1,6 +1,9 @@
 module.exports = {
   name: 'ping',
-  description: 'Returns latency and API ping',
+  aliases: [],
+  category: 'info',
+  description: 'Clears the chat (max: 100)',
+  usage: '[command]',
   run: async (client, message, args) => {
     const msg = await message.channel.send(`🏓 Pinging....`);
 

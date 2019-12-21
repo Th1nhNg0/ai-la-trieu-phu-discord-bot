@@ -3,6 +3,7 @@ module.exports = {
   aliases: ['purge', 'nuke'],
   category: 'moderation',
   description: 'Clears the chat (max: 100)',
+  usage: '[command || num message want to delete]',
   run: async (client, message, args) => {
     if (message.deletable) {
       message.delete();
