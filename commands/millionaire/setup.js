@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const db = require(process.env.NODE_PATH + '/handlers/db.js');
+const question_db = require(process.env.NODE_PATH + '/handlers/question_db.js');
 
 module.exports = {
   name: 'setup',
@@ -49,8 +50,17 @@ module.exports = {
           await message.reply('No one want to play :((');
           return;
         }
+
+        //init database
         db.set('players', players).write();
         db.set('state', 'init').write();
+        let questions = await question_db
+          .get('questions')
+          .random()
+          .take(15)
+          .value();
+        db.set('questions', questions).write();
+
         const embed2 = new Discord.RichEmbed()
           .setColor('#0099ff')
           .setTitle('Ai là triệu phú <(")')
@@ -62,7 +72,8 @@ module.exports = {
             'Ai la trieu phu',
             'https://upload.wikimedia.org/wikipedia/en/f/fe/Vietnam_millionaire.JPG'
           )
-          .addField('Players:', players.join('\n'));
+          .addField('Players:', players.join('\n'))
+          .addField('Command:', 'Type "!start" to start the game');
         message.channel.send(embed2);
       });
   }

@@ -1,8 +1,129 @@
 {
   "players": [
-    "Ìifjw2gdoqvj",
     "Trần Trần"
   ],
   "question": [],
-  "state": null
+  "state": "init",
+  "questions": [
+    {
+      "question": "In traditional English puppet shows, who is married to the character Punch?",
+      "A": "Debbie",
+      "B": "Victoria",
+      "C": "Judy",
+      "D": "Barbara",
+      "answer": "C"
+    },
+    {
+      "question": "Who is the career hit leader among players never elected to Baseball's Hall of Fame?",
+      "A": "Steve Garvey",
+      "B": "Jim Rice",
+      "C": "Pete Rose",
+      "D": "Ken Griffey Jr",
+      "answer": "C"
+    },
+    {
+      "question": "What native empire controlled Large areas of South African Territory during the 19th century?",
+      "A": "Hutu",
+      "B": "Zulu",
+      "C": "Aztec",
+      "D": "Masai",
+      "answer": "B"
+    },
+    {
+      "question": "What place is named in the title of the 1979 live album by rock legends Cheap Trick?",
+      "A": "Budapest",
+      "B": "Budokan",
+      "C": "Bhutan",
+      "D": "Britain",
+      "answer": "B"
+    },
+    {
+      "question": "Which of these television series was not set in the United States?",
+      "A": "'Picket Fences'",
+      "B": "'M*A*S*H'",
+      "C": "'Northern Exposure'",
+      "D": "'The Paper Chase'",
+      "answer": "B"
+    },
+    {
+      "question": "If you are 'riding fakie' inside a 'half pipe' what are you probably doing?",
+      "A": "skiing",
+      "B": "biking",
+      "C": "snowboarding",
+      "D": "surfing",
+      "answer": "C"
+    },
+    {
+      "question": "Who was president of the United States when Bill Clinton was born?",
+      "A": "Herbert Hoover",
+      "B": "Harry S. Truman",
+      "C": "Franklin Roosevelt",
+      "D": "Dwight Eisenhower",
+      "answer": "B"
+    },
+    {
+      "question": "Which of these is an Italian Design firm?",
+      "A": "Escada",
+      "B": "Fendi",
+      "C": "Ghost",
+      "D": "Mainbocher",
+      "answer": "B"
+    },
+    {
+      "question": "What important food crop is grown in fields called paddies?",
+      "A": "wheat",
+      "B": "rye",
+      "C": "corn",
+      "D": "rice",
+      "answer": "D"
+    },
+    {
+      "question": "What is the square root of 81 squared?",
+      "A": "9",
+      "B": "27",
+      "C": "81",
+      "D": "729",
+      "answer": "C"
+    },
+    {
+      "question": "For a man and woman on a date, 'dutch treat' means what?",
+      "A": "the man pays",
+      "B": "the woman pays",
+      "C": "the Dutch pay",
+      "D": "each pays their own way",
+      "answer": "D"
+    },
+    {
+      "question": "Which brand of cat food claims it's so tasty that 'cats ask for it by name'?",
+      "A": "Fancy Feast",
+      "B": "Cat Chow",
+      "C": "Meow Mix",
+      "D": "9-Lives",
+      "answer": "C"
+    },
+    {
+      "question": "How is the Arabic numeral for '2' written?",
+      "A": "2",
+      "B": "II",
+      "C": "I",
+      "D": "ii",
+      "answer": "A"
+    },
+    {
+      "question": "Which of these would you most commonly find in a sconce?",
+      "A": "candle",
+      "B": "food",
+      "C": "birds",
+      "D": "books",
+      "answer": "A"
+    },
+    {
+      "question": "Which of the following is not a TV cartoon duo?",
+      "A": "Chip and Dale",
+      "B": "Beavis and Butt-head",
+      "C": "Simon and Garfunkel",
+      "D": "Tom and Jerry",
+      "answer": "C"
+    }
+  ]
 }
