@@ -16,6 +16,7 @@ module.exports = {
       await message.reply('The game not setup yet');
       return;
     }
+    await db.set('state', 'playing').write();
     let questions = await db.get('questions').value();
     for (let i = 1; i <= 15; i++) {
       if (state === null) return;

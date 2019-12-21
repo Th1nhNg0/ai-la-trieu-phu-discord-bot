@@ -3,15 +3,15 @@
     "Trần Trần"
   ],
   "question": [],
-  "state": "init",
+  "state": "playing",
   "questions": [
     {
-      "question": "In traditional English puppet shows, who is married to the character Punch?",
-      "A": "Debbie",
-      "B": "Victoria",
-      "C": "Judy",
-      "D": "Barbara",
-      "answer": "C"
+      "question": "Which of these is not a type of rock?",
+      "A": "metamorphic",
+      "B": "sedimentary",
+      "C": "igneous",
+      "D": "deciduous",
+      "answer": "D"
     },
     {
       "question": "Who is the career hit leader among players never elected to Baseball's Hall of Fame?",
@@ -22,108 +22,108 @@
       "answer": "C"
     },
     {
-      "question": "What native empire controlled Large areas of South African Territory during the 19th century?",
-      "A": "Hutu",
-      "B": "Zulu",
-      "C": "Aztec",
-      "D": "Masai",
-      "answer": "B"
-    },
-    {
-      "question": "What place is named in the title of the 1979 live album by rock legends Cheap Trick?",
-      "A": "Budapest",
-      "B": "Budokan",
-      "C": "Bhutan",
-      "D": "Britain",
-      "answer": "B"
-    },
-    {
-      "question": "Which of these television series was not set in the United States?",
-      "A": "'Picket Fences'",
-      "B": "'M*A*S*H'",
-      "C": "'Northern Exposure'",
-      "D": "'The Paper Chase'",
-      "answer": "B"
-    },
-    {
-      "question": "If you are 'riding fakie' inside a 'half pipe' what are you probably doing?",
-      "A": "skiing",
-      "B": "biking",
-      "C": "snowboarding",
-      "D": "surfing",
+      "question": "Which of these fashion designers was born in the United States?",
+      "A": "Laura Ashley",
+      "B": "Helmut Lang",
+      "C": "Donna Karan",
+      "D": "Christian Dior",
       "answer": "C"
     },
     {
-      "question": "Who was president of the United States when Bill Clinton was born?",
-      "A": "Herbert Hoover",
-      "B": "Harry S. Truman",
-      "C": "Franklin Roosevelt",
-      "D": "Dwight Eisenhower",
+      "question": "The common term for someone who has difficulty seeing objects in the distance is what?",
+      "A": "farsighted",
+      "B": "nearsighted",
+      "C": "hindsighted",
+      "D": "hypermetropic",
       "answer": "B"
     },
     {
-      "question": "Which of these is an Italian Design firm?",
-      "A": "Escada",
-      "B": "Fendi",
-      "C": "Ghost",
-      "D": "Mainbocher",
-      "answer": "B"
-    },
-    {
-      "question": "What important food crop is grown in fields called paddies?",
-      "A": "wheat",
-      "B": "rye",
-      "C": "corn",
-      "D": "rice",
+      "question": "What is the name of Raggedy Ann's doll brother?",
+      "A": "Red",
+      "B": "Freckles",
+      "C": "Randy",
+      "D": "Andy",
       "answer": "D"
     },
     {
-      "question": "What is the square root of 81 squared?",
-      "A": "9",
-      "B": "27",
-      "C": "81",
-      "D": "729",
-      "answer": "C"
+      "question": "Which of these magazines does not focus on natural science?",
+      "A": "Tiger Beat",
+      "B": "Outside",
+      "C": "National Geographic",
+      "D": "Smithsonian",
+      "answer": "A"
     },
     {
-      "question": "For a man and woman on a date, 'dutch treat' means what?",
-      "A": "the man pays",
-      "B": "the woman pays",
-      "C": "the Dutch pay",
-      "D": "each pays their own way",
+      "question": "Which of these pastas is spiral shaped?",
+      "A": "fettuccine",
+      "B": "rigatoni",
+      "C": "tortellini",
+      "D": "rotini",
       "answer": "D"
     },
     {
-      "question": "Which brand of cat food claims it's so tasty that 'cats ask for it by name'?",
-      "A": "Fancy Feast",
-      "B": "Cat Chow",
-      "C": "Meow Mix",
-      "D": "9-Lives",
-      "answer": "C"
+      "question": "On TV's 'Seinfeld' what type of doctor did Mr. Costanza go to when he sat on 'fusilli Jerry'?",
+      "A": "ophthalmologist",
+      "B": "cardiologist",
+      "C": "neurologist",
+      "D": "proctologist",
+      "answer": "D"
     },
     {
-      "question": "How is the Arabic numeral for '2' written?",
-      "A": "2",
-      "B": "II",
-      "C": "I",
-      "D": "ii",
+      "question": "Which of the following is not in Nevada?",
+      "A": "Liberace Museum",
+      "B": "Pikes Peak",
+      "C": "Lake Mead",
+      "D": "Hoover Dam",
+      "answer": "B"
+    },
+    {
+      "question": "What was the name of the 1999 art exhibit that sparked a national debate about censorship?",
+      "A": "'Sticks & Stones'",
+      "B": "'Pulsation'",
+      "C": "'Black & White'",
+      "D": "'Sensation'",
+      "answer": "D"
+    },
+    {
+      "question": "Cheddar cheese got its name from a village in what country?",
+      "A": "England",
+      "B": "France",
+      "C": "Switzerland",
+      "D": "Denmark",
       "answer": "A"
     },
     {
-      "question": "Which of these would you most commonly find in a sconce?",
-      "A": "candle",
-      "B": "food",
-      "C": "birds",
-      "D": "books",
+      "question": "If you are watching a Shavian play, who is the author?",
+      "A": "Shakespeare",
+      "B": "Aeschylus",
+      "C": "George Bernard Shaw",
+      "D": "Anton Chekhov",
+      "answer": "C"
+    },
+    {
+      "question": "Which of these items is useful for removing ink stains?",
+      "A": "baking soda",
+      "B": "nail polish",
+      "C": "hair spray",
+      "D": "butter",
       "answer": "A"
     },
     {
-      "question": "Which of the following is not a TV cartoon duo?",
-      "A": "Chip and Dale",
-      "B": "Beavis and Butt-head",
-      "C": "Simon and Garfunkel",
-      "D": "Tom and Jerry",
-      "answer": "C"
+      "question": "On a set of jumper cables, what color designates the negative connector?",
+      "A": "black",
+      "B": "red",
+      "C": "orange",
+      "D": "blue",
+      "answer": "A"
+    },
+    {
+      "question": "Which of the following articles of clothing has a hood?",
+      "A": "parka",
+      "B": "kilt",
+      "C": "lederhosen",
+      "D": "sarong",
+      "answer": "A"
     }
   ]
 }
