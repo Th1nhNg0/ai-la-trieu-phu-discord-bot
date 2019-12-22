@@ -129,16 +129,15 @@ module.exports = {
                   if (index > -1) {
                     players.splice(index, 1);
                     db.set('playerQues.' + users[id].username, i).write();
-                  } else {
-                    correctAnswer++;
                   }
-                }
+                } else correctAnswer++;
               }
               db.set('quesNum', i).write();
               db.set('alivePlayers', players).write();
               if (players.length === 0) state = 'end';
               let fileName;
-              if (correctAnswer >= users.length / 2) fileName = '1-5dung.ogg';
+              if (correctAnswer >= Object.keys(users).length / 2)
+                fileName = '1-5dung.ogg';
               else fileName = '1-5sai.ogg';
               dispatcher.end();
               dispatcher = connection.playFile('./music/' + fileName, {
@@ -163,7 +162,7 @@ module.exports = {
                     players.length > 0 ? players.join('/n') : "Đéo có ai :'("
                   )
               );
-              await sleep(6000);
+              await sleep(4000);
             }
           });
 

@@ -3,132 +3,132 @@
     "Trần Trần"
   ],
   "question": [],
-  "state": "playing",
+  "state": null,
   "questions": [
     {
-      "question": "In what country did Magic Johnson play professional basketball during the 1999 season?",
-      "A": "United States",
-      "B": "Sweden",
-      "C": "Israel",
-      "D": "Turkey",
-      "answer": "B"
-    },
-    {
-      "question": "Which of these is a member of the cucumber family?",
-      "A": "green pepper",
-      "B": "watermelon",
-      "C": "potato",
-      "D": "green bean",
-      "answer": "B"
-    },
-    {
-      "question": "Who is the star of the TV show 'Everybody Loves Raymond'?",
-      "A": "Ray Liotta",
-      "B": "Ray Romano",
-      "C": "Ray Parker Jr.",
-      "D": "Sugar Ray Leonard",
-      "answer": "B"
-    },
-    {
-      "question": "Who were the Know-Nothings?",
-      "A": "a '60's comedy troupe",
-      "B": "computer designers",
-      "C": "a political party",
-      "D": "a spy ring",
-      "answer": "C"
-    },
-    {
-      "question": "If you are 'riding fakie' inside a 'half pipe' what are you probably doing?",
-      "A": "skiing",
-      "B": "biking",
-      "C": "snowboarding",
-      "D": "surfing",
-      "answer": "C"
-    },
-    {
-      "question": "A triptych is a work of art that is painted on how many panels?",
-      "A": "two",
-      "B": "three",
-      "C": "five",
-      "D": "eight",
-      "answer": "B"
-    },
-    {
-      "question": "What topic does Spin magazine primarily cover?",
-      "A": "politics",
-      "B": "washing machines",
-      "C": "books",
-      "D": "music",
+      "question": "What is the name of the Swedish company that specializes in affordable furniture?",
+      "A": "Gambro",
+      "B": "Electrolux",
+      "C": "Saab",
+      "D": "IKEA",
       "answer": "D"
     },
     {
-      "question": "What's unique about a skeleton key?",
-      "A": "It opens many locks.",
-      "B": "It's made of bone.",
-      "C": "It's extremely old.",
-      "D": "It hangs in a closet.",
+      "question": "Which of these toys answers questions?",
+      "A": "Magic 8 Ball",
+      "B": "Barbie",
+      "C": "Frisbee",
+      "D": "Slinky",
       "answer": "A"
     },
     {
-      "question": "What are the names of Donald Duck's three nephews?",
-      "A": "Quick, Quack, Quock",
-      "B": "Alvin, Simon, Theodore",
-      "C": "Robbie, Chip, Ernie",
-      "D": "Huey, Dewey, Louie",
-      "answer": "D"
+      "question": "On Valentine's Day 2000, NASA's NEAR spacecraft began a yearlong orbit of what asteroid?",
+      "A": "Eros",
+      "B": "Cupid",
+      "C": "Aphrodite",
+      "D": "Venus",
+      "answer": "A"
     },
     {
-      "question": "Which 'Rocky' film features Mr. T?",
-      "A": "'Rocky II'",
-      "B": "'Rocky III'",
-      "C": "'Rocky IV'",
-      "D": "'Rocky '",
+      "question": "At what age can someone first attend an R-rated movie without an accompanying adult?",
+      "A": "15",
+      "B": "17",
+      "C": "18",
+      "D": "21",
+      "answer": "C"
+    },
+    {
+      "question": "Pop icon Tiny Tim was famous for playing what musical instrument?",
+      "A": "ukulele",
+      "B": "kazoo",
+      "C": "accordion",
+      "D": "fiddle",
+      "answer": "A"
+    },
+    {
+      "question": "What newspaper do Lois Lane and Clark Kent work for?",
+      "A": "The Bugle",
+      "B": "The Daily Planet",
+      "C": "The Metropolis Tribune",
+      "D": "The New York Times",
       "answer": "B"
     },
     {
-      "question": "What was the title of Beethoven's only completed opera?",
-      "A": "'Faust'",
-      "B": "'The Silence'",
-      "C": "'Immortal Beloved'",
-      "D": "'Fidelio'",
+      "question": "From 1971 to 1997, the Democratic Republic of Congo was known as what?",
+      "A": "Zaire",
+      "B": "Angola",
+      "C": "Rhodesia",
+      "D": "Belgian Congo",
+      "answer": "A"
+    },
+    {
+      "question": "What chemical do people frequently use to bleach hair?",
+      "A": "folic acid",
+      "B": "hydrogen peroxide",
+      "C": "sodium chloride",
+      "D": "nitrous oxide",
+      "answer": "B"
+    },
+    {
+      "question": "Which of these states is not the birthplace of a US president?",
+      "A": "New Jersey",
+      "B": "Nebraska",
+      "C": "Kansas",
+      "D": "California",
+      "answer": "C"
+    },
+    {
+      "question": "What color is Pepto-Bismol liquid?",
+      "A": "pink",
+      "B": "blue",
+      "C": "clear",
+      "D": "green",
+      "answer": "A"
+    },
+    {
+      "question": "From what language does the term 'R.S.V.P.' originate?",
+      "A": "Russian",
+      "B": "Italian",
+      "C": "Portuguese",
+      "D": "French",
       "answer": "D"
     },
     {
-      "question": "What does a pH level measure?",
-      "A": "acidity",
-      "B": "density",
-      "C": "wavelength",
-      "D": "humidity",
-      "answer": "A"
+      "question": "What is the medical term for a doctor's identification of a disease?",
+      "A": "Hypnosis",
+      "B": "Prognosis",
+      "C": "Trichinosis",
+      "D": "Diagnosis",
+      "answer": "D"
     },
     {
-      "question": "The Original Apple iMac computer was available in all of the following colors except which?",
-      "A": "Tangerine",
-      "B": "Strawberry",
-      "C": "Kiwi",
-      "D": "Grape",
+      "question": "What are the dimensions of a 'letter size' piece of paper?",
+      "A": "3 1/2 x 5 inches",
+      "B": "5 x 10 inches",
+      "C": "8 1/2 x 11 inches",
+      "D": "11 x 17 inches",
       "answer": "C"
     },
     {
-      "question": "Which of these is made from cacao seeds?",
-      "A": "marzipan",
-      "B": "soy sauce",
-      "C": "chocolate",
-      "D": "anchovies",
-      "answer": "C"
+      "question": "How many spikes are on the Statue of Liberty's crown?",
+      "A": "five",
+      "B": "seven",
+      "C": "nine",
+      "D": "thirteen",
+      "answer": "B"
     },
     {
-      "question": "How many states were in the Confederate States of America?",
-      "A": "11",
-      "B": "13",
-      "C": "16",
-      "D": "22",
-      "answer": "A"
+      "question": "What is the principal ingredient in traditional cole slaw?",
+      "A": "lettuce",
+      "B": "spinach ",
+      "C": "cabbage",
+      "D": "chicory",
+      "answer": "C"
     }
   ],
-  "alivePlayers": [
-    "Trần Trần"
-  ],
-  "quesNum": 1,
-  "playerQues": {}
+  "alivePlayers": [],
+  "quesNum": 3,
+  "playerQues": {
+    "Trần Trần": 3
+  }
 }
