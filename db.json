@@ -6,124 +6,124 @@
   "state": "playing",
   "questions": [
     {
-      "question": "Which of these is not the name of one of rock musician Frank Zappa's children?",
-      "A": "Dweezil",
-      "B": "Ahmet",
-      "C": "Moon Unit",
-      "D": "Lumpy Gravy",
-      "answer": "D"
-    },
-    {
-      "question": "After Prince Charles, who is next in line to be the king of England?",
-      "A": "Prince William",
-      "B": "Prince Andrew",
-      "C": "Prince Edward",
-      "D": "Fresh Prince",
-      "answer": "A"
-    },
-    {
-      "question": "Who was president of the United States when Bill Clinton was born?",
-      "A": "Herbert Hoover",
-      "B": "Harry S. Truman",
-      "C": "Franklin Roosevelt",
-      "D": "Dwight Eisenhower",
+      "question": "In what country did Magic Johnson play professional basketball during the 1999 season?",
+      "A": "United States",
+      "B": "Sweden",
+      "C": "Israel",
+      "D": "Turkey",
       "answer": "B"
     },
     {
-      "question": "What is the square root of 81 squared?",
-      "A": "9",
-      "B": "27",
-      "C": "81",
-      "D": "729",
+      "question": "Which of these is a member of the cucumber family?",
+      "A": "green pepper",
+      "B": "watermelon",
+      "C": "potato",
+      "D": "green bean",
+      "answer": "B"
+    },
+    {
+      "question": "Who is the star of the TV show 'Everybody Loves Raymond'?",
+      "A": "Ray Liotta",
+      "B": "Ray Romano",
+      "C": "Ray Parker Jr.",
+      "D": "Sugar Ray Leonard",
+      "answer": "B"
+    },
+    {
+      "question": "Who were the Know-Nothings?",
+      "A": "a '60's comedy troupe",
+      "B": "computer designers",
+      "C": "a political party",
+      "D": "a spy ring",
       "answer": "C"
     },
     {
-      "question": "What is the art of elegant handwriting called?",
-      "A": "calligraphy",
-      "B": "engraving",
-      "C": "decoupage",
-      "D": "lithography",
-      "answer": "A"
-    },
-    {
-      "question": "Which of the Three Stooges was not related to the others?",
-      "A": "Moe",
-      "B": "Larry",
-      "C": "Curly",
-      "D": "Shemp",
-      "answer": "B"
-    },
-    {
-      "question": "In the novel 'The Adventures of Tom Sawyer' what is the name of Tom's sweetheart?",
-      "A": "Polly Finn",
-      "B": "Becky Thatcher",
-      "C": "Nancy Drew",
-      "D": "Emma Bovary",
-      "answer": "B"
-    },
-    {
-      "question": "Which of these dishes is made from pig intestines?",
-      "A": "haggis",
-      "B": "chitlins",
-      "C": "grits",
-      "D": "chop suey",
-      "answer": "B"
-    },
-    {
-      "question": "What kind of animal is a peregrine?",
-      "A": "moose",
-      "B": "cat",
-      "C": "bird",
-      "D": "fish",
+      "question": "If you are 'riding fakie' inside a 'half pipe' what are you probably doing?",
+      "A": "skiing",
+      "B": "biking",
+      "C": "snowboarding",
+      "D": "surfing",
       "answer": "C"
     },
     {
-      "question": "If Christmas Day is on a Saturday, then the following New Year's Day falls on what day of the week?",
-      "A": "Sunday",
-      "B": "Monday",
-      "C": "Friday",
-      "D": "Saturday",
+      "question": "A triptych is a work of art that is painted on how many panels?",
+      "A": "two",
+      "B": "three",
+      "C": "five",
+      "D": "eight",
+      "answer": "B"
+    },
+    {
+      "question": "What topic does Spin magazine primarily cover?",
+      "A": "politics",
+      "B": "washing machines",
+      "C": "books",
+      "D": "music",
       "answer": "D"
     },
     {
-      "question": "Which of these is not one of the official languages of the United Nations?",
-      "A": "Japanese",
-      "B": "English",
-      "C": "Russian",
-      "D": "Spanish",
+      "question": "What's unique about a skeleton key?",
+      "A": "It opens many locks.",
+      "B": "It's made of bone.",
+      "C": "It's extremely old.",
+      "D": "It hangs in a closet.",
       "answer": "A"
     },
     {
-      "question": "Who was the first First Lady to run for political office?",
-      "A": "Hillary Clinton",
-      "B": "Rosalynn Carter",
-      "C": "Bess Truman",
-      "D": "Eleanor Roosevelt",
+      "question": "What are the names of Donald Duck's three nephews?",
+      "A": "Quick, Quack, Quock",
+      "B": "Alvin, Simon, Theodore",
+      "C": "Robbie, Chip, Ernie",
+      "D": "Huey, Dewey, Louie",
+      "answer": "D"
+    },
+    {
+      "question": "Which 'Rocky' film features Mr. T?",
+      "A": "'Rocky II'",
+      "B": "'Rocky III'",
+      "C": "'Rocky IV'",
+      "D": "'Rocky '",
+      "answer": "B"
+    },
+    {
+      "question": "What was the title of Beethoven's only completed opera?",
+      "A": "'Faust'",
+      "B": "'The Silence'",
+      "C": "'Immortal Beloved'",
+      "D": "'Fidelio'",
+      "answer": "D"
+    },
+    {
+      "question": "What does a pH level measure?",
+      "A": "acidity",
+      "B": "density",
+      "C": "wavelength",
+      "D": "humidity",
       "answer": "A"
     },
     {
-      "question": "On a set of jumper cables, what color designates the negative connector?",
-      "A": "black",
-      "B": "red",
-      "C": "orange",
-      "D": "blue",
-      "answer": "A"
-    },
-    {
-      "question": "How many keys are on a standard piano?",
-      "A": "20",
-      "B": "54",
-      "C": "88",
-      "D": "100",
+      "question": "The Original Apple iMac computer was available in all of the following colors except which?",
+      "A": "Tangerine",
+      "B": "Strawberry",
+      "C": "Kiwi",
+      "D": "Grape",
       "answer": "C"
     },
     {
-      "question": "In the 1960s 'Batman' TV series, who was not a guest villain?",
-      "A": "The Minstrel",
-      "B": "The Archer",
-      "C": "The Bookworm",
-      "D": "The Squeegee Guy",
-      "answer": "D"
+      "question": "Which of these is made from cacao seeds?",
+      "A": "marzipan",
+      "B": "soy sauce",
+      "C": "chocolate",
+      "D": "anchovies",
+      "answer": "C"
+    },
+    {
+      "question": "How many states were in the Confederate States of America?",
+      "A": "11",
+      "B": "13",
+      "C": "16",
+      "D": "22",
+      "answer": "A"
     }
   ],
   "alivePlayers": [
