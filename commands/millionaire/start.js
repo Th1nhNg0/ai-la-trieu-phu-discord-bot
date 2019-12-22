@@ -1,6 +1,31 @@
 const Discord = require('discord.js');
 const db = require(process.env.NODE_PATH + '/handlers/db.js');
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function getEndEmbed() {
+  let playerQues = db.get('playerQues').value();
+  let sorted = [];
+  for (let player in playerQues) {
+    sorted.push([player, playerQues[player]]);
+  }
+  sorted.sort(function(a, b) {
+    return a[1] - b[1];
+  });
+  sorted = sorted.map(elem => elem[0] + ' ' + elem[1]);
+  return new Discord.RichEmbed()
+    .setColor('#dbdb2c')
+    .setTitle('Ăn lồn')
+    .setTimestamp()
+    .setFooter(
+      'Ai la trieu phu',
+      'https://upload.wikimedia.org/wikipedia/en/f/fe/Vietnam_millionaire.JPG'
+    )
+    .addField('Rank: ', sorted.join('\n'));
+}
+
 module.exports = {
   name: 'start',
   aliases: [],
@@ -12,14 +37,20 @@ module.exports = {
       await message.reply('ANOTHER GAME IS PLAYING!!!!');
       return;
     }
-    if (state === null) {
+    if (state !== 'init') {
       await message.reply('The game not setup yet');
       return;
     }
     await db.set('state', 'playing').write();
     let questions = await db.get('questions').value();
+    let players = await db.get('alivePlayers').value();
+
     for (let i = 1; i <= 15; i++) {
-      if (state === null) return;
+      if (state === 'end') {
+        let embed = await getEndEmbed();
+        message.channel.send(embed);
+        return;
+      }
       const msg = await message.channel.send(`:computer: LOADING QUESTION....`);
       try {
         await msg.react('🇦');
@@ -29,38 +60,46 @@ module.exports = {
       } catch (err) {
         console.log('One of the emojis failed to react.');
       }
+
       let question = questions[i - 1];
       let answer = question.answer;
-      const embed = new Discord.RichEmbed()
-        .setColor('#0099ff')
-        .setTitle('Câu hỏi số ' + i)
-        .setTimestamp()
-        .setFooter(
-          'Ai la trieu phu',
-          'https://upload.wikimedia.org/wikipedia/en/f/fe/Vietnam_millionaire.JPG'
-        )
-        .setDescription(question.question)
-        .addField('Đáp án 🇦', question.A)
-        .addField('Đáp án 🇧', question.B)
-        .addField('Đáp án 🇨', question.C)
-        .addField('Đáp án 🇩', question.D);
-      await msg.edit(embed);
+
+      await msg.edit(
+        new Discord.RichEmbed()
+          .setColor('#53b512')
+          .setTitle('Câu hỏi số ' + i)
+          .setTimestamp()
+          .setFooter(
+            'Ai la trieu phu',
+            'https://upload.wikimedia.org/wikipedia/en/f/fe/Vietnam_millionaire.JPG'
+          )
+          .setDescription(question.question)
+          .addField('Đáp án 🇦', question.A, true)
+          .addField('Đáp án 🇧', question.B, true)
+          .addBlankField()
+          .addField('Đáp án 🇨', question.C, true)
+          .addField('Đáp án 🇩', question.D, true)
+      );
+
       let users = {};
       const filter = (reaction, user) => {
-        if (user.bot || user.id in users) return false;
-        users[user.id] = reaction.emoji.name;
+        if (user.bot || user.id in users || !players.includes(user.username))
+          return false;
+        users[user.id] = {
+          answer: reaction.emoji.name,
+          username: user.username
+        };
         message.channel.send(user + ' ' + reaction.emoji.name);
         return ['🇦', '🇧', '🇨', '🇩'].includes(reaction.emoji.name);
       };
       await msg.awaitReactions(filter, { time: 15000 }).then(collected => {
-        message.channel.send(`Total ${collected.size} players voted!`);
         if (collected.size === 0) {
-          state = null;
+          state = 'end';
           message.channel.send(`No one voted so bye :(`);
         }
         for (let id in users) {
           if (users.hasOwnProperty(id)) {
-            let userAnswer = users[id];
+            let userAnswer = users[id].answer;
             switch (userAnswer) {
               case '🇦':
                 userAnswer = 'A';
@@ -74,10 +113,37 @@ module.exports = {
               default:
                 userAnswer = 'D';
             }
-            if (userAnswer === answer) {
-              message.channel.send(`<@${id}>  fucking right ✅ !!!`);
-            } else message.channel.send(`<@${id}>  fucking wrong :x:  !!!`);
+            if (userAnswer !== answer) {
+              let index = players.indexOf(users[id].username);
+              if (index > -1) {
+                players.splice(index, 1);
+                db.set('playerQues.' + users[id].username, i).write();
+              }
+            }
           }
+          db.set('quesNum', i).write();
+          db.set('alivePlayers', players).write();
+          if (players.length === 0) state = 'end';
+
+          message.channel.send(
+            'OUR ANWSER ISSSS:\n :regional_indicator_' +
+              answer.toLocaleLowerCase() +
+              ':'
+          );
+          message.channel.send(
+            new Discord.RichEmbed()
+              .setColor('#0099ff')
+              .setTitle('Người chơi tiếp: ' + players.length)
+              .setTimestamp()
+              .setFooter(
+                'Ai la trieu phu',
+                'https://upload.wikimedia.org/wikipedia/en/f/fe/Vietnam_millionaire.JPG'
+              )
+              .addField(
+                'Danh sách',
+                players.length > 0 ? players.join('/n') : "Đéo có ai :'("
+              )
+          );
         }
       });
 

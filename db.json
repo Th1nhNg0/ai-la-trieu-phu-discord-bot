@@ -6,107 +6,99 @@
   "state": "playing",
   "questions": [
     {
-      "question": "Which of these is not a type of rock?",
-      "A": "metamorphic",
-      "B": "sedimentary",
-      "C": "igneous",
-      "D": "deciduous",
+      "question": "Which of these is not the name of one of rock musician Frank Zappa's children?",
+      "A": "Dweezil",
+      "B": "Ahmet",
+      "C": "Moon Unit",
+      "D": "Lumpy Gravy",
       "answer": "D"
     },
     {
-      "question": "Who is the career hit leader among players never elected to Baseball's Hall of Fame?",
-      "A": "Steve Garvey",
-      "B": "Jim Rice",
-      "C": "Pete Rose",
-      "D": "Ken Griffey Jr",
-      "answer": "C"
-    },
-    {
-      "question": "Which of these fashion designers was born in the United States?",
-      "A": "Laura Ashley",
-      "B": "Helmut Lang",
-      "C": "Donna Karan",
-      "D": "Christian Dior",
-      "answer": "C"
-    },
-    {
-      "question": "The common term for someone who has difficulty seeing objects in the distance is what?",
-      "A": "farsighted",
-      "B": "nearsighted",
-      "C": "hindsighted",
-      "D": "hypermetropic",
-      "answer": "B"
-    },
-    {
-      "question": "What is the name of Raggedy Ann's doll brother?",
-      "A": "Red",
-      "B": "Freckles",
-      "C": "Randy",
-      "D": "Andy",
-      "answer": "D"
-    },
-    {
-      "question": "Which of these magazines does not focus on natural science?",
-      "A": "Tiger Beat",
-      "B": "Outside",
-      "C": "National Geographic",
-      "D": "Smithsonian",
+      "question": "After Prince Charles, who is next in line to be the king of England?",
+      "A": "Prince William",
+      "B": "Prince Andrew",
+      "C": "Prince Edward",
+      "D": "Fresh Prince",
       "answer": "A"
     },
     {
-      "question": "Which of these pastas is spiral shaped?",
-      "A": "fettuccine",
-      "B": "rigatoni",
-      "C": "tortellini",
-      "D": "rotini",
-      "answer": "D"
-    },
-    {
-      "question": "On TV's 'Seinfeld' what type of doctor did Mr. Costanza go to when he sat on 'fusilli Jerry'?",
-      "A": "ophthalmologist",
-      "B": "cardiologist",
-      "C": "neurologist",
-      "D": "proctologist",
-      "answer": "D"
-    },
-    {
-      "question": "Which of the following is not in Nevada?",
-      "A": "Liberace Museum",
-      "B": "Pikes Peak",
-      "C": "Lake Mead",
-      "D": "Hoover Dam",
+      "question": "Who was president of the United States when Bill Clinton was born?",
+      "A": "Herbert Hoover",
+      "B": "Harry S. Truman",
+      "C": "Franklin Roosevelt",
+      "D": "Dwight Eisenhower",
       "answer": "B"
     },
     {
-      "question": "What was the name of the 1999 art exhibit that sparked a national debate about censorship?",
-      "A": "'Sticks & Stones'",
-      "B": "'Pulsation'",
-      "C": "'Black & White'",
-      "D": "'Sensation'",
-      "answer": "D"
-    },
-    {
-      "question": "Cheddar cheese got its name from a village in what country?",
-      "A": "England",
-      "B": "France",
-      "C": "Switzerland",
-      "D": "Denmark",
-      "answer": "A"
-    },
-    {
-      "question": "If you are watching a Shavian play, who is the author?",
-      "A": "Shakespeare",
-      "B": "Aeschylus",
-      "C": "George Bernard Shaw",
-      "D": "Anton Chekhov",
+      "question": "What is the square root of 81 squared?",
+      "A": "9",
+      "B": "27",
+      "C": "81",
+      "D": "729",
       "answer": "C"
     },
     {
-      "question": "Which of these items is useful for removing ink stains?",
-      "A": "baking soda",
-      "B": "nail polish",
-      "C": "hair spray",
-      "D": "butter",
+      "question": "What is the art of elegant handwriting called?",
+      "A": "calligraphy",
+      "B": "engraving",
+      "C": "decoupage",
+      "D": "lithography",
+      "answer": "A"
+    },
+    {
+      "question": "Which of the Three Stooges was not related to the others?",
+      "A": "Moe",
+      "B": "Larry",
+      "C": "Curly",
+      "D": "Shemp",
+      "answer": "B"
+    },
+    {
+      "question": "In the novel 'The Adventures of Tom Sawyer' what is the name of Tom's sweetheart?",
+      "A": "Polly Finn",
+      "B": "Becky Thatcher",
+      "C": "Nancy Drew",
+      "D": "Emma Bovary",
+      "answer": "B"
+    },
+    {
+      "question": "Which of these dishes is made from pig intestines?",
+      "A": "haggis",
+      "B": "chitlins",
+      "C": "grits",
+      "D": "chop suey",
+      "answer": "B"
+    },
+    {
+      "question": "What kind of animal is a peregrine?",
+      "A": "moose",
+      "B": "cat",
+      "C": "bird",
+      "D": "fish",
+      "answer": "C"
+    },
+    {
+      "question": "If Christmas Day is on a Saturday, then the following New Year's Day falls on what day of the week?",
+      "A": "Sunday",
+      "B": "Monday",
+      "C": "Friday",
+      "D": "Saturday",
+      "answer": "D"
+    },
+    {
+      "question": "Which of these is not one of the official languages of the United Nations?",
+      "A": "Japanese",
+      "B": "English",
+      "C": "Russian",
+      "D": "Spanish",
+      "answer": "A"
+    },
+    {
+      "question": "Who was the first First Lady to run for political office?",
+      "A": "Hillary Clinton",
+      "B": "Rosalynn Carter",
+      "C": "Bess Truman",
+      "D": "Eleanor Roosevelt",
       "answer": "A"
     },
     {
@@ -118,12 +110,25 @@
       "answer": "A"
     },
     {
-      "question": "Which of the following articles of clothing has a hood?",
-      "A": "parka",
-      "B": "kilt",
-      "C": "lederhosen",
-      "D": "sarong",
-      "answer": "A"
+      "question": "How many keys are on a standard piano?",
+      "A": "20",
+      "B": "54",
+      "C": "88",
+      "D": "100",
+      "answer": "C"
+    },
+    {
+      "question": "In the 1960s 'Batman' TV series, who was not a guest villain?",
+      "A": "The Minstrel",
+      "B": "The Archer",
+      "C": "The Bookworm",
+      "D": "The Squeegee Guy",
+      "answer": "D"
     }
-  ]
+  ],
+  "alivePlayers": [
+    "Trần Trần"
+  ],
+  "quesNum": 1,
+  "playerQues": {}
 }

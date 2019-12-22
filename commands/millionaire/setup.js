@@ -9,8 +9,13 @@ module.exports = {
   description: 'Setup the game',
   //   usage: '[command]',
   run: async (client, message, args) => {
+    let state = await db.get('state').value();
+    if (state === 'playing') {
+      await message.reply('ANOTHER GAME IS PLAYING!!!!');
+      return;
+    }
     const embed = new Discord.RichEmbed()
-      .setColor('#0099ff')
+      .setColor('#a3b5a5')
       .setTitle('Ai là triệu phú <(")')
       .setThumbnail(
         'https://upload.wikimedia.org/wikipedia/en/f/fe/Vietnam_millionaire.JPG'
@@ -52,17 +57,20 @@ module.exports = {
         }
 
         //init database
-        db.set('players', players).write();
-        db.set('state', 'init').write();
+        await db.set('players', players).write();
+        await db.set('alivePlayers', [...players]).write();
+        await db.set('state', 'init').write();
+        await db.set('quesNum', 1).write();
+        await db.set('playerQues', {}).write();
         let questions = await question_db
           .get('questions')
           .random()
           .take(15)
           .value();
-        db.set('questions', questions).write();
+        await db.set('questions', questions).write();
 
         const embed2 = new Discord.RichEmbed()
-          .setColor('#0099ff')
+          .setColor('#a3b5a5')
           .setTitle('Ai là triệu phú <(")')
           .setThumbnail(
             'https://upload.wikimedia.org/wikipedia/en/f/fe/Vietnam_millionaire.JPG'
