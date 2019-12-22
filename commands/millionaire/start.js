@@ -12,7 +12,7 @@ function getEndEmbed() {
     sorted.push([player, playerQues[player]]);
   }
   sorted.sort(function(a, b) {
-    return a[1] - b[1];
+    return b[1] - a[1];
   });
   sorted = sorted.map(elem => elem[0] + ' ' + elem[1]);
   return new Discord.RichEmbed()
@@ -23,7 +23,7 @@ function getEndEmbed() {
       'Ai la trieu phu',
       'https://upload.wikimedia.org/wikipedia/en/f/fe/Vietnam_millionaire.JPG'
     )
-    .addField('Rank: ', sorted.join('\n'));
+    .addField('Rank: ', sorted.join(' /n '));
 }
 
 module.exports = {
@@ -132,38 +132,38 @@ module.exports = {
                   }
                 } else correctAnswer++;
               }
-              db.set('quesNum', i).write();
-              db.set('alivePlayers', players).write();
-              if (players.length === 0) state = 'end';
-              let fileName;
-              if (correctAnswer >= Object.keys(users).length / 2)
-                fileName = '1-5dung.ogg';
-              else fileName = '1-5sai.ogg';
-              dispatcher.end();
-              dispatcher = connection.playFile('./music/' + fileName, {
-                type: 'ogg/opus'
-              });
-              message.channel.send(
-                'OUR ANWSER ISSSS:\n :regional_indicator_' +
-                  answer.toLocaleLowerCase() +
-                  ':'
-              );
-              message.channel.send(
-                new Discord.RichEmbed()
-                  .setColor('#0099ff')
-                  .setTitle('Người chơi tiếp: ' + players.length)
-                  .setTimestamp()
-                  .setFooter(
-                    'Ai la trieu phu',
-                    'https://upload.wikimedia.org/wikipedia/en/f/fe/Vietnam_millionaire.JPG'
-                  )
-                  .addField(
-                    'Danh sách',
-                    players.length > 0 ? players.join('/n') : "Đéo có ai :'("
-                  )
-              );
-              await sleep(4000);
             }
+            db.set('quesNum', i).write();
+            db.set('alivePlayers', players).write();
+            if (players.length === 0) state = 'end';
+            let fileName;
+            if (correctAnswer >= Object.keys(users).length / 2)
+              fileName = '1-5dung.ogg';
+            else fileName = '1-5sai.ogg';
+            await dispatcher.end();
+            dispatcher = connection.playFile('./music/' + fileName, {
+              type: 'ogg/opus'
+            });
+            message.channel.send(
+              'OUR ANWSER ISSSS:\n :regional_indicator_' +
+                answer.toLocaleLowerCase() +
+                ':'
+            );
+            message.channel.send(
+              new Discord.RichEmbed()
+                .setColor('#0099ff')
+                .setTitle('Người chơi tiếp: ' + players.length)
+                .setTimestamp()
+                .setFooter(
+                  'Ai la trieu phu',
+                  'https://upload.wikimedia.org/wikipedia/en/f/fe/Vietnam_millionaire.JPG'
+                )
+                .addField(
+                  'Danh sách',
+                  players.length > 0 ? players.join('/n') : "Đéo có ai :'("
+                )
+            );
+            await sleep(4000);
           });
 
         // if not lag
