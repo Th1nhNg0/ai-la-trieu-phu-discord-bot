@@ -15,8 +15,8 @@ function getEndEmbed() {
     return b[1] - a[1];
   });
   sorted[0][0] += ' :first_place:';
-  sorted[1][0] += ' :second_place:';
-  sorted[2][0] += ' :third_place:';
+  if (sorted.length > 1) sorted[1][0] += ' :second_place:';
+  if (sorted.length > 2) sorted[2][0] += ' :third_place:';
   sorted = sorted.map(
     (elem, index) =>
       (index < 3 ? '**' + elem[0] + '**' : elem[0]) + ' ' + elem[1]
@@ -60,9 +60,9 @@ module.exports = {
           dispatcher = connection.playFile('./music/end.ogg', {
             type: 'ogg/opus'
           });
-          dispatcher.on('end', function() {
-            let embed = getEndEmbed();
-            return message.channel.send(embed);
+          let embed = getEndEmbed();
+          message.channel.send(embed);
+          return dispatcher.on('end', function() {
             voiceChannel.leave();
           });
         }
@@ -83,7 +83,6 @@ module.exports = {
 
         let question = questions[i - 1];
         let answer = question.answer;
-
         await msg.edit(
           new Discord.RichEmbed()
             .setColor('#53b512')
@@ -101,6 +100,18 @@ module.exports = {
             .addField('Đáp án 🇩', question.D, true)
         );
 
+        let cd = await message.channel.send(`Time left: ${time} seconds`);
+        let interval;
+        let time = getTime(i) / 1000 - 1;
+        interval = setInterval(function() {
+          console.log(time);
+          cd.edit(`Time left: ${time} seconds`);
+          time--;
+          if (time < 0) {
+            cd.delete();
+            clearInterval(interval);
+          }
+        }, 1000);
         let users = {};
         const filter = (reaction, user) => {
           if (user.bot || user.id in users || !players.includes(user.username))
@@ -155,16 +166,13 @@ module.exports = {
             if (correctAnswer >= Object.keys(users).length / 2)
               fileName = getMusic(i, 'dung');
             else fileName = getMusic(i, 'sai');
-            dispatcher.end();
+            await dispatcher.end();
             dispatcher = connection.playFile('./music/' + fileName, {
               type: 'ogg/opus'
             });
-            message.channel.send(
-              'OUR ANWSER ISSSS:\n :regional_indicator_' +
-                answer.toLocaleLowerCase() +
-                ':'
-            );
-            message.channel.send(
+            let embed = getAnswerEmbed(answer);
+            await message.channel.send(embed);
+            await message.channel.send(
               new Discord.RichEmbed()
                 .setColor('#0099ff')
                 .setTitle('Người chơi tiếp: ' + players.length)
@@ -197,10 +205,23 @@ function getTime(i) {
     case i <= 5:
       return 15000;
     case i <= 10:
-      return 20000 + i * 1000;
+      return 30000 + i * 1000;
     case i <= 15:
       return 45000 + i * 1000;
     default:
       return 15000;
   }
+}
+function getAnswerEmbed(answer) {
+  const imgFile = new Discord.Attachment('./image/' + answer + '.png');
+  return new Discord.RichEmbed()
+    .setColor('#a3ff99')
+    .setTitle('Câu trả lời của chúng tôi là')
+    .setTimestamp()
+    .setFooter(
+      'Ai la trieu phu',
+      'https://upload.wikimedia.org/wikipedia/en/f/fe/Vietnam_millionaire.JPG'
+    )
+    .attachFile(imgFile)
+    .setImage('attachment://' + answer + '.png');
 }
