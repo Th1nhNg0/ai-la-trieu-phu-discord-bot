@@ -14,6 +14,9 @@ function getEndEmbed() {
   sorted.sort(function(a, b) {
     return b[1] - a[1];
   });
+  sorted[0][0] += ' :first_place:';
+  sorted[1][0] += ' :second_place:';
+  sorted[2][0] += ' :third_place:';
   sorted = sorted.map(
     (elem, index) =>
       (index < 3 ? '**' + elem[0] + '**' : elem[0]) + ' ' + elem[1]
@@ -57,6 +60,7 @@ module.exports = {
           dispatcher = connection.playFile('./music/end.ogg', {
             type: 'ogg/opus'
           });
+          dispatcher.on('end', voiceChannel.leave());
           let embed = await getEndEmbed();
           return message.channel.send(embed);
         }
