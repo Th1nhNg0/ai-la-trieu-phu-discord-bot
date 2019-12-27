@@ -60,9 +60,11 @@ module.exports = {
           dispatcher = connection.playFile('./music/end.ogg', {
             type: 'ogg/opus'
           });
-          dispatcher.on('end', voiceChannel.leave());
-          let embed = await getEndEmbed();
-          return message.channel.send(embed);
+          dispatcher.on('end', function() {
+            let embed = getEndEmbed();
+            return message.channel.send(embed);
+            voiceChannel.leave();
+          });
         }
         dispatcher = connection.playFile('./music/' + getMusic(i, ''), {
           type: 'ogg/opus'
@@ -111,7 +113,7 @@ module.exports = {
           return ['🇦', '🇧', '🇨', '🇩'].includes(reaction.emoji.name);
         };
         await msg
-          .awaitReactions(filter, { time: 15000 + i * 1000 })
+          .awaitReactions(filter, { time: getTime(i) })
           .then(async collected => {
             let correctAnswer = 0;
             for (let id in users) {
@@ -188,5 +190,17 @@ function getMusic(i, state) {
       return '1-5' + state + '.ogg';
     default:
       return i + state + '.ogg';
+  }
+}
+function getTime(i) {
+  switch (true) {
+    case i <= 5:
+      return 15000;
+    case i <= 10:
+      return 20000 + i * 1000;
+    case i <= 15:
+      return 45000 + i * 1000;
+    default:
+      return 15000;
   }
 }

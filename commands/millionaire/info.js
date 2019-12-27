@@ -10,7 +10,6 @@ module.exports = {
   description: 'Info of this game',
   //   usage: '[command]',
   run: async (client, message, args) => {
-    message.delete();
     let state = await db.get('state').value();
     if (state === null) {
       message.reply('game not started yet');
