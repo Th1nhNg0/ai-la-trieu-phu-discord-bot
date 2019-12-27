@@ -51,7 +51,8 @@ module.exports = {
         let user_list = msg.reactions.first().users;
         let players = [];
         for (let user of user_list) {
-          if (!user[1].bot) players.push(user[1].username);
+          let userz = message.guild.member(user[1]);
+          if (!user[1].bot) players.push(userz.displayName);
         }
         if (players.length === 0) {
           await message.reply('No one want to play :((');

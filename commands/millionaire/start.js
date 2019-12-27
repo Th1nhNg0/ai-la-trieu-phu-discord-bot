@@ -29,7 +29,7 @@ function getEndEmbed() {
       'Ai la trieu phu',
       'https://upload.wikimedia.org/wikipedia/en/f/fe/Vietnam_millionaire.JPG'
     )
-    .addField('Rank: ', sorted.join(' /n '));
+    .addField('Rank: ', sorted.join(' \n '));
 }
 
 module.exports = {
@@ -47,6 +47,8 @@ module.exports = {
       return message.channel.send('You need to be in a voice channel to play!');
     let connection = await voiceChannel.join();
 
+    console.log("A NEW GAME STARTED")
+    
     await db.set('state', 'playing').write();
     let questions = await db.get('questions').value();
     let players = await db.get('alivePlayers').value();
@@ -105,7 +107,6 @@ module.exports = {
         let cd = await message.channel.send(`Time left: ${time} seconds`);
 
         interval = setInterval(function() {
-          console.log(time);
           cd.edit(`Time left: ${time} seconds`);
           time--;
           if (time < 0) {
@@ -115,11 +116,16 @@ module.exports = {
         }, 1000);
         let users = {};
         const filter = (reaction, user) => {
-          if (user.bot || user.id in users || !players.includes(user.username))
+          user = message.guild.member(user);
+          if (
+            user.bot ||
+            user.id in users ||
+            !players.includes(user.displayName)
+          )
             return false;
           users[user.id] = {
             answer: reaction.emoji.name,
-            username: user.username
+            username: user.displayName
           };
           message.channel.send(user + ' ' + reaction.emoji.name);
           return ['🇦', '🇧', '🇨', '🇩'].includes(reaction.emoji.name);
@@ -184,7 +190,7 @@ module.exports = {
                 )
                 .addField(
                   'Danh sách',
-                  players.length > 0 ? players.join('/n') : "Đéo có ai :'("
+                  players.length > 0 ? players.join('\n') : "Đéo có ai :'("
                 )
             );
             await sleep(4000);
@@ -206,7 +212,7 @@ function getTime(i) {
     case i <= 5:
       return 15000;
     case i <= 10:
-      return 30000 + i * 1000;
+      return 20000 + i * 1000;
     case i <= 15:
       return 45000 + i * 1000;
     default:
