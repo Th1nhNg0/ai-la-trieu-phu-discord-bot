@@ -29,7 +29,9 @@ module.exports = {
       .addField(
         'Luật chơi',
         `Người chơi phải trả lời 15 câu hỏi với cấp độ từ dễ đến khó, thời gian suy nghĩ không hạn chế. Mỗi câu hỏi có một mức tiền thưởng, tăng dần theo thứ tự. Có ba mốc quan trọng là câu số 5, câu số 10 và câu số 15 (mốc "TRIỆU PHÚ"). Khi vượt qua các mốc này, họ chắc chắn có được số tiền thưởng tương ứng của các câu hỏi đó.
-`
+
+        Câu hỏi đầu tiên có 15s để trả lời, thời gian trả lời sẽ tăng thêm 1 giây qua mỗi câu hỏi.
+        `
       )
       .addField('Command', 'type "confirm" if you ready!');
     const msg = await message.channel.send(embed);

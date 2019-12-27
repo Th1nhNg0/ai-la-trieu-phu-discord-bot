@@ -14,7 +14,10 @@ function getEndEmbed() {
   sorted.sort(function(a, b) {
     return b[1] - a[1];
   });
-  sorted = sorted.map(elem => elem[0] + ' ' + elem[1]);
+  sorted = sorted.map(
+    (elem, index) =>
+      (index < 3 ? '**' + elem[0] + '**' : elem[0]) + ' ' + elem[1]
+  );
   return new Discord.RichEmbed()
     .setColor('#dbdb2c')
     .setTitle('Ăn lồn')
@@ -51,10 +54,13 @@ module.exports = {
       for (let i = 1; i <= 15; i++) {
         if (state === 'end') {
           await db.set('state', 'end').write();
+          dispatcher = connection.playFile('./music/end.ogg', {
+            type: 'ogg/opus'
+          });
           let embed = await getEndEmbed();
           return message.channel.send(embed);
         }
-        dispatcher = connection.playFile('./music/1-5.ogg', {
+        dispatcher = connection.playFile('./music/' + getMusic(i, ''), {
           type: 'ogg/opus'
         });
         const msg = await message.channel.send(
@@ -101,12 +107,8 @@ module.exports = {
           return ['🇦', '🇧', '🇨', '🇩'].includes(reaction.emoji.name);
         };
         await msg
-          .awaitReactions(filter, { time: 30000 })
+          .awaitReactions(filter, { time: 15000 + i * 1000 })
           .then(async collected => {
-            if (collected.size === 0) {
-              state = 'end';
-              message.channel.send(`No one voted so bye :(`);
-            }
             let correctAnswer = 0;
             for (let id in users) {
               if (users.hasOwnProperty(id)) {
@@ -133,14 +135,21 @@ module.exports = {
                 } else correctAnswer++;
               }
             }
+            players = players.filter(elem => {
+              let iftrue = Object.values(users)
+                .map(user => user.username)
+                .includes(elem);
+              db.set('playerQues.' + elem, i).write();
+              return iftrue;
+            });
             db.set('quesNum', i).write();
             db.set('alivePlayers', players).write();
             if (players.length === 0) state = 'end';
             let fileName;
             if (correctAnswer >= Object.keys(users).length / 2)
-              fileName = '1-5dung.ogg';
-            else fileName = '1-5sai.ogg';
-            await dispatcher.end();
+              fileName = getMusic(i, 'dung');
+            else fileName = getMusic(i, 'sai');
+            dispatcher.end();
             dispatcher = connection.playFile('./music/' + fileName, {
               type: 'ogg/opus'
             });
@@ -165,18 +174,15 @@ module.exports = {
             );
             await sleep(4000);
           });
-
-        // if not lag
-        // let count = 15;
-        // const counter = setInterval(() => {
-        //   if (count > 0) {
-        //     msg.edit(count);
-        //     count--;
-        //   } else {
-        //     clearInterval(counter);
-        //   }
-        // }, 1000);
       }
     });
   }
 };
+function getMusic(i, state) {
+  switch (true) {
+    case i <= 5:
+      return '1-5' + state + '.ogg';
+    default:
+      return i + state + '.ogg';
+  }
+}
