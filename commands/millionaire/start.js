@@ -100,9 +100,10 @@ module.exports = {
             .addField('Đáp án 🇩', question.D, true)
         );
 
-        let cd = await message.channel.send(`Time left: ${time} seconds`);
         let interval;
         let time = getTime(i) / 1000 - 1;
+        let cd = await message.channel.send(`Time left: ${time} seconds`);
+
         interval = setInterval(function() {
           console.log(time);
           cd.edit(`Time left: ${time} seconds`);
