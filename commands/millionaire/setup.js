@@ -66,7 +66,7 @@ module.exports = {
         await db.set('quesNum', 1).write();
         await db.set('playerQues', {}).write();
         let questions = await question_db
-          .get('questions')
+          .get('questionss')
           .random()
           .take(15)
           .value();
