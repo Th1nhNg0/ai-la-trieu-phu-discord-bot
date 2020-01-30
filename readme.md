@@ -39,15 +39,15 @@ React emoji to choose answer
 
 - [x] Can handle game on 1 guild
 - [x] Database for 1 guild
-- [ ] Ranking system
+- [ ] Leader Board
 - [ ] Skill system (50/50,...)
 - [ ] Money system, to active skill
-- [ ] Can handle multi game on multi guild
+- [x] Can handle multi game on multi guild
 - [ ] Database for multi guild
 - [ ] Command to add question
 - [ ] Command to choose questions set
 - [ ] More control to the bot
-- [ ] Web server to control the bot
+- [ ] Web server to control the bot (50%)
 
 ## Authors
 

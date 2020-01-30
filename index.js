@@ -1,31 +1,31 @@
-const Discord = require('discord.js');
+const Discord = require("discord.js");
 const client = new Discord.Client();
-const fs = require('fs');
+const fs = require("fs");
 
-require('dotenv').config();
+require("dotenv").config();
 process.env.NODE_PATH = __dirname;
 
 client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
-client.categories = fs.readdirSync('./commands/');
+client.categories = fs.readdirSync("./commands/");
 
-['command'].forEach(handler => {
+["command"].forEach(handler => {
   require(`./handlers/${handler}`)(client);
 });
 
-client.on('ready', () => {
+client.on("ready", () => {
   console.log(`Hi, ${client.user.username} is now online!`);
   client.user.setPresence({
-    status: 'online',
+    status: "online",
     game: {
-      name: 'me getting developed',
-      type: 'PLAYING'
+      name: "me getting developed",
+      type: "PLAYING"
     }
   });
 });
 
-client.on('message', async message => {
-  const prefix = '!';
+client.on("message", async message => {
+  const prefix = "!";
 
   if (message.author.bot) return;
   if (!message.guild) return;

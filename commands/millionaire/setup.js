@@ -1,90 +1,82 @@
-const Discord = require('discord.js');
-const db = require(process.env.NODE_PATH + '/handlers/db.js');
-const question_db = require(process.env.NODE_PATH + '/handlers/question_db.js');
+const Discord = require("discord.js");
+const Game = require(process.env.NODE_PATH + "/model/game.js");
 
 module.exports = {
-  name: 'setup',
+  name: "setup",
   aliases: [],
-  category: 'millionaire',
-  description: 'Setup the game',
+  category: "millionaire",
+  description: "Setup the game",
   //   usage: '[command]',
   run: async (client, message, args) => {
-    let state = await db.get('state').value();
-    if (state === 'playing') {
-      await message.reply('ANOTHER GAME IS PLAYING!!!!');
+    let guild = client.guilds.get(message.guild.id);
+    if (!guild.game || guild.game.state !== "playing") guild.game = new Game();
+    let game = guild.game;
+
+    let state = game.state;
+    if (state === "playing") {
+      await message.reply("ANOTHER GAME IS PLAYING!!!!");
       return;
     }
+
     const embed = new Discord.RichEmbed()
-      .setColor('#a3b5a5')
+      .setColor("#a3b5a5")
       .setTitle('Ai là triệu phú <(")')
       .setThumbnail(
-        'https://upload.wikimedia.org/wikipedia/en/f/fe/Vietnam_millionaire.JPG'
+        "https://upload.wikimedia.org/wikipedia/en/f/fe/Vietnam_millionaire.JPG"
       )
-      .setDescription('✅ To Play')
+      .setDescription("✅ To Play")
       .setTimestamp()
       .setFooter(
-        'Ai la trieu phu',
-        'https://upload.wikimedia.org/wikipedia/en/f/fe/Vietnam_millionaire.JPG'
+        "Ai la trieu phu",
+        "https://upload.wikimedia.org/wikipedia/en/f/fe/Vietnam_millionaire.JPG"
       )
       .addField(
-        'Luật chơi',
+        "Luật chơi",
         `Người chơi phải trả lời 15 câu hỏi với cấp độ từ dễ đến khó, thời gian suy nghĩ không hạn chế. Mỗi câu hỏi có một mức tiền thưởng, tăng dần theo thứ tự. Có ba mốc quan trọng là câu số 5, câu số 10 và câu số 15 (mốc "TRIỆU PHÚ"). Khi vượt qua các mốc này, họ chắc chắn có được số tiền thưởng tương ứng của các câu hỏi đó.
 
         Câu hỏi đầu tiên có 15s để trả lời, thời gian trả lời sẽ tăng thêm 1 giây qua mỗi câu hỏi.
         `
       )
-      .addField('Command', 'type "confirm" if you ready!');
+      .addField("Command", 'type "confirm" if you ready!');
     const msg = await message.channel.send(embed);
-    await msg.react('✅');
+    await msg.react("✅");
     const filter = m => {
       return (
         m.author.id === message.author.id &&
-        m.content.toLowerCase() === 'confirm'
+        m.content.toLowerCase() === "confirm"
       );
     };
     message.channel
       .awaitMessages(filter, {
         max: 1,
-        time: 1200000
+        time: 120000
       })
       .then(async collected => {
         let user_list = msg.reactions.first().users;
         let players = [];
         for (let user of user_list) {
-          let userz = message.guild.member(user[1]);
-          if (!user[1].bot) players.push(userz.displayName);
+          let userg = message.guild.member(user[1]);
+          if (!user[1].bot)
+            players.push({ name: userg.displayName, id: userg.id });
         }
         if (players.length === 0) {
-          await message.reply('No one want to play :((');
+          await message.reply("No one want to play :((");
           return;
         }
-
-        //init database
-        await db.set('players', players).write();
-        await db.set('alivePlayers', [...players]).write();
-        await db.set('state', 'init').write();
-        await db.set('quesNum', 1).write();
-        await db.set('playerQues', {}).write();
-        let questions = await question_db
-          .get('questionss')
-          .random()
-          .take(15)
-          .value();
-        await db.set('questions', questions).write();
-
+        game.init(players);
         const embed2 = new Discord.RichEmbed()
-          .setColor('#a3b5a5')
+          .setColor("#a3b5a5")
           .setTitle('Ai là triệu phú <(")')
           .setThumbnail(
-            'https://upload.wikimedia.org/wikipedia/en/f/fe/Vietnam_millionaire.JPG'
+            "https://upload.wikimedia.org/wikipedia/en/f/fe/Vietnam_millionaire.JPG"
           )
           .setTimestamp()
           .setFooter(
-            'Ai la trieu phu',
-            'https://upload.wikimedia.org/wikipedia/en/f/fe/Vietnam_millionaire.JPG'
+            "Ai la trieu phu",
+            "https://upload.wikimedia.org/wikipedia/en/f/fe/Vietnam_millionaire.JPG"
           )
-          .addField('Players:', players.join('\n'))
-          .addField('Command:', 'Type "!start" to start the game');
+          .addField("Players:", players.map(e => e.name).join("\n"))
+          .addField("Command:", 'Type "!start" to start the game');
         message.channel.send(embed2);
       });
   }

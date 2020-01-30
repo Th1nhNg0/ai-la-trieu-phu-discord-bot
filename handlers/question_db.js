@@ -1,7 +1,7 @@
-const low = require('lowdb');
-const FileSync = require('lowdb/adapters/FileSync');
+const low = require("lowdb");
+const FileSync = require("lowdb/adapters/FileSync");
 
-const adapter = new FileSync('question.json');
+const adapter = new FileSync("question.json");
 const db = low(adapter);
 
 db._.mixin({

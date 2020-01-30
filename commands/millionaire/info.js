@@ -1,41 +1,36 @@
-const db = require(process.env.NODE_PATH + '/handlers/db.js');
-const Discord = require('discord.js');
+const Discord = require("discord.js");
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 module.exports = {
-  name: 'info',
+  name: "info",
   aliases: [],
-  category: 'millionaire',
-  description: 'Info of this game',
+  category: "millionaire",
+  description: "Info of this game",
   //   usage: '[command]',
   run: async (client, message, args) => {
-    let state = await db.get('state').value();
-    if (state === null) {
-      message.reply('game not started yet');
+    let guild = client.guilds.get(message.guild.id);
+    let game = guild.game;
+    let state = game ? game.state : null;
+    if (state == null) {
+      message.reply("game not setup yet");
       return;
     }
-    let players = await db.get('players').value();
-    let alivePlayers = await db.get('alivePlayers').value();
-    let quesNum = await db.get('quesNum').value();
-    let msg = await message.channel.send(
+    let currentQuestion = game.currentQuestion;
+    let playersList = game
+      .getTopPlayer()
+      .map(e => `${e.name} ${e.alive ? "✅" : ":x:"}   ${e.currentQuestion}`);
+    await message.channel.send(
       new Discord.RichEmbed()
-        .setColor('#28f7dc')
-        .setTitle('Thông tin')
+        .setColor("#28f7dc")
+        .setTitle("Thông tin")
         .setTimestamp()
         .setFooter(
-          'Ai la trieu phu',
-          'https://upload.wikimedia.org/wikipedia/en/f/fe/Vietnam_millionaire.JPG'
+          "Ai la trieu phu",
+          "https://upload.wikimedia.org/wikipedia/en/f/fe/Vietnam_millionaire.JPG"
         )
-        .addField('Câu hỏi hiện tại:', quesNum)
-        .addField(
-          'Danh sách người chơi:',
-          players
-            .map(elem =>
-              alivePlayers.includes(elem) ? elem + ' ✅' : elem + ' :x:'
-            )
-            .join('/n')
-        )
+        .addField("Câu hỏi hiện tại:", currentQuestion)
+        .addField("Danh sách người chơi:", playersList)
     );
   }
 };
