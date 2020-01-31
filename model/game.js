@@ -224,6 +224,8 @@ function getEndEmbed(playerList) {
     .addField("Rank: ", playerList.join(" \n "));
 }
 async function playSync(voiceConnection, filepath) {
-  const player = voiceConnection.playFile(filepath);
+  const player = voiceConnection.playFile(filepath,{
+    type: 'ogg/opus'
+  });
   await new Promise(resolve => player.on("end", resolve));
 }
