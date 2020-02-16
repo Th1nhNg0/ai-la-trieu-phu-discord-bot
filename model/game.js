@@ -26,7 +26,7 @@ class Game {
     }
   }
   getTopPlayer() {
-    this.players.sort((a, b) => a.currentQuestion - b.currentQuestion);
+    this.players.sort((a, b) => b.currentQuestion - a.currentQuestion);
     return this.players;
   }
   getAlivePlayer() {
@@ -204,12 +204,14 @@ function getAnswerEmbed(answer) {
 }
 function getEndEmbed(playerList) {
   playerList = [...playerList.values()];
-  playerList[0].name += " :first_place:";
-  if (playerList.length > 1) playerList[1].name += " :second_place:";
-  if (playerList.length > 2) playerList[2].name += " :third_place:";
+  playerList[0].name = " :first_place: " + playerList[0].name;
+  if (playerList.length > 1)
+    playerList[1].name = " :second_place: " + playerList[1].name;
+  if (playerList.length > 2)
+    playerList[2].name = " :third_place: " + playerList[2].name;
   playerList = playerList.map(
     (elem, index) =>
-      (index < 3 ? "**" + elem.name + "**" : elem.name) +
+      (index < 3 ? "**" + elem.name + "**" : index + 1 + " " + elem.name) +
       " " +
       elem.currentQuestion
   );
@@ -224,8 +226,8 @@ function getEndEmbed(playerList) {
     .addField("Rank: ", playerList.join(" \n "));
 }
 async function playSync(voiceConnection, filepath) {
-  const player = voiceConnection.playFile(filepath,{
-    type: 'ogg/opus'
+  const player = voiceConnection.playFile(filepath, {
+    type: "ogg/opus"
   });
   await new Promise(resolve => player.on("end", resolve));
 }

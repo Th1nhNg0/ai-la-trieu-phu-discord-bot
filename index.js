@@ -1,3 +1,5 @@
+var pathToFfmpeg = require("ffmpeg-static");
+console.log(pathToFfmpeg);
 const Discord = require("discord.js");
 const client = new Discord.Client();
 const fs = require("fs");
@@ -26,7 +28,7 @@ client.on("ready", () => {
 });
 
 client.on("message", async message => {
-  const prefix = "!";
+  const prefix = ".";
 
   if (message.author.bot) return;
   if (!message.guild) return;
