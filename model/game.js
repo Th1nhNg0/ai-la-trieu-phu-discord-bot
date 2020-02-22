@@ -102,7 +102,7 @@ class Game {
 
       const filter = (reaction, user) => {
         let player = players.get(user.id);
-        if (user.bot || (player && player.voted)) return false;
+        if (user.bot || (player && player.voted && player.alive)) return false;
         if (!["🇦", "🇧", "🇨", "🇩"].includes(reaction.emoji.name))
           return false;
         player.voted = reaction.emoji.name;
