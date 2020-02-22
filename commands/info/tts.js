@@ -16,41 +16,20 @@ module.exports = {
     }
     let connection = await voiceChannel.join();
     let text = args.join(" ");
+    if (text.length == 0) return;
     const url = `https://texttospeech.responsivevoice.org/v1/text:synthesize?text=${encodeURIComponent(
       text
     )}&lang=vi&engine=g2&key=PL3QYYuV`;
+    message.channel.send(url);
     try {
-      let filePath = await downloadMp3(url);
-      let dispatcher = connection.playFile(filePath, {
-        type: "ogg/opus"
-      });
+      let dispatcher = connection.playArbitraryInput(url);
       dispatcher.on("end", () => {
-        voiceChannel.leave();
         console.log("TTS:", text);
+        voiceChannel.leave();
       });
     } catch (e) {
-      message.send("SORRY, SOMETHING WENT WRONG");
+      message.channel.send("SORRY, SOMETHING WENT WRONG\n" + e);
+      voiceChannel.leave();
     }
   }
 };
-
-async function downloadMp3(url) {
-  const filePath = path.join(__dirname, "a.ogg");
-  if (fs.existsSync(filePath)) {
-    fs.unlinkSync(filePath);
-  }
-  const writer = fs.createWriteStream(filePath);
-
-  const response = await axios({
-    url,
-    method: "GET",
-    responseType: "stream"
-  });
-
-  response.data.pipe(writer);
-
-  return new Promise((resolve, reject) => {
-    writer.on("finish", resolve(filePath));
-    writer.on("error", reject);
-  });
-}
