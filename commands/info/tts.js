@@ -20,7 +20,6 @@ module.exports = {
     const url = `https://texttospeech.responsivevoice.org/v1/text:synthesize?text=${encodeURIComponent(
       text
     )}&lang=vi&engine=g2&key=PL3QYYuV`;
-    message.channel.send(url);
     try {
       let dispatcher = connection.playArbitraryInput(url);
       dispatcher.on("end", () => {
