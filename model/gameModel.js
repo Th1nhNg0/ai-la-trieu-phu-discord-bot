@@ -1,18 +1,11 @@
 const Discord = require("discord.js");
-const question_db = require(process.env.NODE_PATH + "/handlers/question_db.js");
+const questionsModel = require("./questionsModel.js");
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 class Game {
-  constructor() {
-    this.questions = question_db
-      .get("questions")
-      .random()
-      .take(15)
-      .value();
-  }
-  init(players) {
+  async init(players) {
     if (players.length > 0) this.state = "init";
     this.currentQuestion = 1;
     this.players = new Discord.Collection();
@@ -24,6 +17,7 @@ class Game {
         id: player.id
       });
     }
+    this.questions = await questionsModel.getQuestions();
   }
   getTopPlayer() {
     this.players.sort((a, b) => b.currentQuestion - a.currentQuestion);

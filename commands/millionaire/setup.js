@@ -1,5 +1,5 @@
 const Discord = require("discord.js");
-const Game = require(process.env.NODE_PATH + "/model/game.js");
+const Game = require(process.env.NODE_PATH + "/model/gameModel.js");
 
 module.exports = {
   name: "setup",
