@@ -5,7 +5,7 @@ table.setHeading("Guilds Name", "Load status");
 const guildModel = require("../model/guildModel.js");
 
 module.exports = async client => {
-  guildModel.saveAllGuildSettingsToDatabase(client.guilds);
+  await guildModel.saveAllGuildSettingsToDatabase(client.guilds);
   let guildSettings = await guildModel.loadGuildSettings();
   for (let guild of guildSettings) {
     client.guildSettings.set(guild.id, guild);

@@ -16,13 +16,21 @@ const questionsSchema = new mongoose.Schema({
 questionsSchema.plugin(timestamps);
 const Questions = mongoose.model("questions", questionsSchema);
 
+function countQuestions(database) {
+  let query = {};
+  if (database) query.guildId = database;
+  return Questions.countDocuments(query);
+}
+
 function addNewQuestion(data) {
   let newQues = new Questions(data);
   return newQues.save();
 }
 
-async function getQuestions(total = 15) {
-  let questions = await Questions.find();
+async function getQuestions(total = 15, database) {
+  let query = {};
+  if (database) query.guildId = database;
+  let questions = await Questions.find(query);
   let result = [];
   while (total--) {
     let index = Math.floor(Math.random() * questions.length);
@@ -33,5 +41,6 @@ async function getQuestions(total = 15) {
 
 module.exports = {
   getQuestions,
-  addNewQuestion
+  addNewQuestion,
+  countQuestions
 };

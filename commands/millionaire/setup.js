@@ -1,5 +1,7 @@
 const Discord = require("discord.js");
 const Game = require(process.env.NODE_PATH + "/model/gameModel.js");
+const questionsModel = require(process.env.NODE_PATH +
+  "/model/questionsModel.js");
 
 module.exports = {
   name: "setup",
@@ -8,6 +10,10 @@ module.exports = {
   description: "Setup the game",
   //   usage: '[command]',
   run: async (client, message, args) => {
+    let count = await questionsModel.countQuestions(
+      client.guildSettings.get(message.guild.id).gameDatabase
+    );
+    if (count == 0) return message.channel.send("NO QUESTIONS IN DATABASE :<");
     let guild = client.guilds.get(message.guild.id);
     if (!guild.game || guild.game.state !== "playing") guild.game = new Game();
     let game = guild.game;
@@ -63,7 +69,10 @@ module.exports = {
           await message.reply("No one want to play :((");
           return;
         }
-        game.init(players);
+        game.init(
+          players,
+          client.guildSettings.get(message.guild.id).gameDatabase
+        );
         const embed2 = new Discord.RichEmbed()
           .setColor("#a3b5a5")
           .setTitle('Ai là triệu phú <(")')

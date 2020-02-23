@@ -19,7 +19,8 @@ client.on("ready", () => {
     .connect(process.env.mongodb, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      useCreateIndex: true
+      useCreateIndex: true,
+      useFindAndModify: true
     })
     .then(() => console.log("DATABASE CONNECTED"))
     .catch(e => console.log("DATABASE ERROR\n", e));

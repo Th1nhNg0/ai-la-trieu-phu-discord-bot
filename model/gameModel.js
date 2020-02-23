@@ -5,7 +5,7 @@ function sleep(ms) {
 }
 
 class Game {
-  async init(players) {
+  async init(players, database) {
     if (players.length > 0) this.state = "init";
     this.currentQuestion = 1;
     this.players = new Discord.Collection();
@@ -17,7 +17,7 @@ class Game {
         id: player.id
       });
     }
-    this.questions = await questionsModel.getQuestions();
+    this.questions = await questionsModel.getQuestions(database);
   }
   getTopPlayer() {
     this.players.sort((a, b) => b.currentQuestion - a.currentQuestion);
@@ -96,7 +96,8 @@ class Game {
 
       const filter = (reaction, user) => {
         let player = players.get(user.id);
-        if (user.bot || (player && player.voted && player.alive)) return false;
+        if (user.bot || (player && (player.voted || !player.alive)) || !player)
+          return false;
         if (!["🇦", "🇧", "🇨", "🇩"].includes(reaction.emoji.name))
           return false;
         player.voted = reaction.emoji.name;

@@ -82,7 +82,7 @@ module.exports = {
         }
       );
       okCheck.on("end", async function(collect) {
-        if (collect.first().content == "y")
+        if (collect.first().content.toLowerCase() == "y")
           try {
             await questionsModel.addNewQuestion(question);
             message.channel.send("OK");

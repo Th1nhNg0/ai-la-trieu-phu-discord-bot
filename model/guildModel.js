@@ -4,15 +4,18 @@ const timestamps = require("mongoose-timestamp");
 
 const guildSchema = new mongoose.Schema({
   _id: { type: String, required: true, unique: true },
-  prefix: String
+  prefix: String,
+  gameDatabase: String
 });
 guildSchema.plugin(timestamps);
 const GuildSettings = mongoose.model("guildSettings", guildSchema);
 
 ///function
-
+function updateDatabase(guildId, gameDatabase) {
+  return GuildSettings.findByIdAndUpdate(guildId, { gameDatabase });
+}
 function updatePrefix(guildId, prefix) {
-  GuildSettings.findOneAndUpdate({ _id: guildId }, { prefix });
+  return GuildSettings.findByIdAndUpdate(guildId, { prefix });
 }
 
 //This function is fuck :)
@@ -35,5 +38,6 @@ function loadGuildSettings() {
 module.exports = {
   loadGuildSettings,
   saveAllGuildSettingsToDatabase,
-  updatePrefix
+  updatePrefix,
+  updateDatabase
 };
