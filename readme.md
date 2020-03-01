@@ -33,7 +33,7 @@ React emoji to choose answer
 ## Built With
 
 - [Discordjs](https://discord.js.org/) - Discord js
-- [lowdb](https://github.com/typicode/lowdb) - lowdb
+- [opentdb](https://opentdb.com/) - Open trivia database
 
 ## To Dos
 
@@ -43,9 +43,7 @@ React emoji to choose answer
 - [ ] Skill system (50/50,...)
 - [ ] Money system, to active skill
 - [x] Can handle multi game on multi guild
-- [x] Database for multi guild
-- [x] Command to add question
-- [x] Command to choose questions set
+- [ ] Command to choose questions set
 - [ ] More control to the bot
 - [ ] Web server to control the bot (50%)
 
