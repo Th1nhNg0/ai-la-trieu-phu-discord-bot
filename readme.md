@@ -39,6 +39,7 @@ React emoji to choose answer
 
 - [x] Can handle game on 1 guild
 - [x] Database for 1 guild
+- [x] Database for multi guilds
 - [x] Leader Board
 - [ ] Skill system (50/50,...)
 - [ ] Money system, to active skill
