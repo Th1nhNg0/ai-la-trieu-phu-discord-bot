@@ -50,7 +50,7 @@ React emoji to choose answer
 
 ## Authors
 
-- **Th1nhNg0** - _Initial work_ - [PurpleBooth](https://github.com/Th1nhNg0)
+- **Th1nhNg0** - _Initial work_ - [Th1nhNg0](https://github.com/Th1nhNg0)
 
 ## License
 
