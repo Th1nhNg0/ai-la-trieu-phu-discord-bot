@@ -10,11 +10,12 @@ module.exports = {
   description: "Setup the game",
   //   usage: '[command]',
   run: async (client, message, args) => {
-    let count = await questionsModel.countQuestions(
-      client.guildSettings.get(message.guild.id).gameDatabase
-    );
-    if (count == 0) return message.channel.send("NO QUESTIONS IN DATABASE :<");
-    let guild = client.guilds.get(message.guild.id);
+    let checkDb = await questionsModel.checkDb();
+    if (!checkDb) {
+      return message.channel.send("QUESTION API ERRORS,CANT PLAY NOW");
+    }
+
+    let guild = client.guilds.cache.get(message.guild.id);
     if (!guild.game || guild.game.state !== "playing") guild.game = new Game();
     let game = guild.game;
 
@@ -24,7 +25,7 @@ module.exports = {
       return;
     }
 
-    const embed = new Discord.RichEmbed()
+    const embed = new Discord.MessageEmbed()
       .setColor("#a3b5a5")
       .setTitle('Ai là triệu phú <(")')
       .setThumbnail(
@@ -58,7 +59,7 @@ module.exports = {
         time: 120000
       })
       .then(async collected => {
-        let user_list = msg.reactions.first().users;
+        let user_list = msg.reactions.cache.first().users.cache;
         let players = [];
         for (let user of user_list) {
           let userg = message.guild.member(user[1]);
@@ -73,7 +74,7 @@ module.exports = {
           players,
           client.guildSettings.get(message.guild.id).gameDatabase
         );
-        const embed2 = new Discord.RichEmbed()
+        const embed2 = new Discord.MessageEmbed()
           .setColor("#a3b5a5")
           .setTitle('Ai là triệu phú <(")')
           .setThumbnail(

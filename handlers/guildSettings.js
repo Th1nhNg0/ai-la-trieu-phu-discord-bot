@@ -5,12 +5,12 @@ table.setHeading("Guilds Name", "Load status");
 const guildModel = require("../model/guildModel.js");
 
 module.exports = async client => {
-  await guildModel.saveAllGuildSettingsToDatabase(client.guilds);
+  await guildModel.saveAllGuildSettingsToDatabase(client.guilds.cache);
   let guildSettings = await guildModel.loadGuildSettings();
   for (let guild of guildSettings) {
     client.guildSettings.set(guild.id, guild);
   }
-  for (let guild of client.guilds) {
+  for (let guild of client.guilds.cache) {
     let guildId = guild[0];
     if (client.guildSettings.find(elem => elem.id == guildId)) {
       table.addRow(guild[1].name, "✅");

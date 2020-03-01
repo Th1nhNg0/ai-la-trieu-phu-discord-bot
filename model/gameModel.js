@@ -17,7 +17,7 @@ class Game {
         id: player.id
       });
     }
-    this.questions = await questionsModel.getQuestions(database);
+    this.questions = await questionsModel.getQuestions();
   }
   getTopPlayer() {
     this.players.sort((a, b) => b.currentQuestion - a.currentQuestion);
@@ -36,18 +36,14 @@ class Game {
 
     for (let i = 1; i <= 15; i++) {
       if (this.state === "end") {
-        dispatcher = connection.playFile("./music/end.ogg", {
-          type: "ogg/opus"
-        });
+        dispatcher = connection.play("./music/end.ogg");
         let embed = getEndEmbed(this.getTopPlayer());
         message.channel.send(embed);
-        return dispatcher.on("end", function() {
+        return dispatcher.on("finish", function() {
           voiceChannel.leave();
         });
       }
-      dispatcher = connection.playFile("./music/" + getMusic(i, ""), {
-        type: "ogg/opus"
-      });
+      dispatcher = connection.play("./music/" + getMusic(i, ""));
       const msg = await message.channel.send(`:computer: LOADING QUESTION....`);
       try {
         await msg.react("🇦");
@@ -60,22 +56,21 @@ class Game {
 
       let question = questions[i - 1];
       let answer = question.answer;
-      await msg.edit(
-        new Discord.RichEmbed()
-          .setColor("#53b512")
-          .setTitle("Câu hỏi số " + i)
-          .setTimestamp()
-          .setFooter(
-            "Ai la trieu phu",
-            "https://upload.wikimedia.org/wikipedia/en/f/fe/Vietnam_millionaire.JPG"
-          )
-          .setDescription(question.question)
-          .addField("Đáp án 🇦", question.A, true)
-          .addField("Đáp án 🇧", question.B, true)
-          .addBlankField()
-          .addField("Đáp án 🇨", question.C, true)
-          .addField("Đáp án 🇩", question.D, true)
-      );
+      let sendEmbed = new Discord.MessageEmbed()
+        .setColor("#53b512")
+        .setTitle("Câu hỏi số " + i)
+        .setTimestamp()
+        .setFooter(
+          "Ai la trieu phu",
+          "https://upload.wikimedia.org/wikipedia/en/f/fe/Vietnam_millionaire.JPG"
+        )
+        .setDescription(question.question)
+        .addField("Đáp án 🇦", question.A, true)
+        .addField("Đáp án 🇧", question.B, true)
+        .addField("\u200B", "\u200B")
+        .addField("Đáp án 🇨", question.C, true)
+        .addField("Đáp án 🇩", question.D, true);
+      await msg.edit(sendEmbed);
 
       let interval;
       let time = getTime(i) / 1000 - 1;
@@ -101,7 +96,7 @@ class Game {
         if (!["🇦", "🇧", "🇨", "🇩"].includes(reaction.emoji.name))
           return false;
         player.voted = reaction.emoji.name;
-        message.channel.send(user + " " + reaction.emoji.name);
+        message.channel.send(`${user} voted ${reaction.emoji.name}`);
         return true;
       };
       await msg
@@ -110,6 +105,7 @@ class Game {
           let correctAnswer = 0;
           let wrongAnswer = 0;
           players.forEach(function(player) {
+            if (!player.alive) return;
             let userAnswer = player.voted;
             player.currentQuestion = i;
             switch (userAnswer) {
@@ -142,7 +138,7 @@ class Game {
           let embed = getAnswerEmbed(answer);
           await message.channel.send(embed);
           await message.channel.send(
-            new Discord.RichEmbed()
+            new Discord.MessageEmbed()
               .setColor("#0099ff")
               .setTitle("Người chơi tiếp: " + alivePlayer.length)
               .setTimestamp()
@@ -185,8 +181,8 @@ function getTime(i) {
   }
 }
 function getAnswerEmbed(answer) {
-  const imgFile = new Discord.Attachment("./image/" + answer + ".png");
-  return new Discord.RichEmbed()
+  const imgFile = new Discord.MessageAttachment("./image/" + answer + ".png");
+  return new Discord.MessageEmbed()
     .setColor("#a3ff99")
     .setTitle("Câu trả lời của chúng tôi là")
     .setTimestamp()
@@ -194,7 +190,7 @@ function getAnswerEmbed(answer) {
       "Ai la trieu phu",
       "https://upload.wikimedia.org/wikipedia/en/f/fe/Vietnam_millionaire.JPG"
     )
-    .attachFile(imgFile)
+    .attachFiles(imgFile)
     .setImage("attachment://" + answer + ".png");
 }
 function getEndEmbed(playerList) {
@@ -210,7 +206,7 @@ function getEndEmbed(playerList) {
       " " +
       elem.currentQuestion
   );
-  return new Discord.RichEmbed()
+  return new Discord.MessageEmbed()
     .setColor("#dbdb2c")
     .setTitle("END GAME")
     .setTimestamp()
@@ -221,8 +217,6 @@ function getEndEmbed(playerList) {
     .addField("Rank: ", playerList.join(" \n "));
 }
 async function playSync(voiceConnection, filepath) {
-  const player = voiceConnection.playFile(filepath, {
-    type: "ogg/opus"
-  });
-  await new Promise(resolve => player.on("end", resolve));
+  const player = voiceConnection.play(filepath);
+  await new Promise(resolve => player.on("finish", resolve));
 }

@@ -1,9 +1,9 @@
 module.exports = {
-  name: 'ping',
+  name: "ping",
   aliases: [],
-  category: 'info',
-  description: 'Clears the chat (max: 100)',
-  usage: '[command]',
+  category: "info",
+  description: "Clears the chat (max: 100)",
+  usage: "[command]",
   run: async (client, message, args) => {
     const msg = await message.channel.send(`🏓 Pinging....`);
 
@@ -11,6 +11,6 @@ module.exports = {
         Latency is ${Math.floor(
           msg.createdTimestamp - message.createdTimestamp
         )}ms
-        API Latency is ${Math.round(client.ping)}ms`);
+        `);
   }
 };

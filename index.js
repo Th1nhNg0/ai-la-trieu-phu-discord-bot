@@ -39,10 +39,10 @@ client.on("message", async message => {
     ? client.guildSettings.get(message.guild.id).prefix
     : "!";
 
-  if (message.isMentioned(client.user)) {
+  if (message.author.bot) return;
+  if (message.mentions.users.has(client.user.id)) {
     return message.channel.send(message.author + " my prefix is " + prefix);
   }
-  if (message.author.bot) return;
   if (!message.guild) return;
   if (!message.content.startsWith(prefix)) return;
   if (!message.member)

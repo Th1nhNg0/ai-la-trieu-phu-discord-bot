@@ -9,7 +9,7 @@ module.exports = {
   description: "Info of this game",
   //   usage: '[command]',
   run: async (client, message, args) => {
-    let guild = client.guilds.get(message.guild.id);
+    let guild = client.guilds.cache.get(message.guild.id);
     let game = guild.game;
     let state = game ? game.state : null;
     if (state == null) {
@@ -21,7 +21,7 @@ module.exports = {
       .getTopPlayer()
       .map(e => `${e.name} ${e.alive ? "✅" : ":x:"}   ${e.currentQuestion}`);
     await message.channel.send(
-      new Discord.RichEmbed()
+      new Discord.MessageEmbed()
         .setColor("#28f7dc")
         .setTitle("Thông tin")
         .setTimestamp()
