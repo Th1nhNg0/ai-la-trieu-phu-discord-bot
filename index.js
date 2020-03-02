@@ -15,6 +15,7 @@ client.on("ready", () => {
   ["command", "guildSettings"].forEach(handler => {
     require(`./handlers/${handler}`)(client);
   });
+
   mongoose
     .connect(process.env.mongodb, {
       useNewUrlParser: true,
@@ -40,8 +41,8 @@ client.on("message", async message => {
     : "!";
 
   if (message.author.bot) return;
-  if (message.mentions.users.has(client.user.id)) {
-    return message.channel.send(message.author + " my prefix is " + prefix);
+  if (message.mentions.has(client.user)) {
+    return message.channel.send(`${message.author} my prefix is ${prefix}`);
   }
   if (!message.guild) return;
   if (!message.content.startsWith(prefix)) return;

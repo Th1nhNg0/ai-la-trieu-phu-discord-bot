@@ -1,185 +1,161 @@
 const Discord = require("discord.js");
 const questionsModel = require("./questionsModel.js");
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
 
 class Game {
-  async init(players, database) {
-    if (players.length > 0) this.state = "init";
+  constructor(config) {
+    this.config = {
+      category: undefined,
+      categoryName: "ALL",
+      difficulty: "easy",
+      numberQuestions: 15
+    };
+    Object.assign(this.config, config);
+  }
+
+  async init(players) {
+    if (players.length == 0) return;
+    this.state = "init";
     this.currentQuestion = 1;
     this.players = new Discord.Collection();
-    for (let player of players) {
-      this.players.set(player.id, {
-        name: player.name,
+    for (let user of players) {
+      this.players.set(user.id, {
+        user,
         alive: true,
-        currentQuestion: 1,
-        id: player.id
+        currentQuestion: 1
       });
     }
-    this.questions = await questionsModel.getQuestions();
+    this.questions = await questionsModel.getQuestions(this.config);
   }
   getTopPlayer() {
     this.players.sort((a, b) => b.currentQuestion - a.currentQuestion);
     return this.players;
   }
-  getAlivePlayer() {
-    return this.players.filter(elem => elem.alive).array();
+  async _end() {
+    this.state = "end";
+    let embed = getEndEmbed(this.getTopPlayer());
+    this.message.channel.send(embed);
   }
-  async play(voiceChannel, message) {
-    let connection = await voiceChannel.join();
-    this.state = "playing";
-    let questions = this.questions;
-    let players = this.players;
-    let dispatcher;
-    await playSync(connection, "./music/start.ogg");
+  async _play(index) {
+    if (index > this.config.numberQuestions) return _end();
+    let editEmbed = new Discord.MessageEmbed().setTitle(
+      `:computer: LOADING QUESTION....`
+    );
+    const msg = await this.message.channel.send(editEmbed);
+    await msg.react("🇦");
+    await msg.react("🇧");
+    await msg.react("🇨");
+    await msg.react("🇩");
 
-    for (let i = 1; i <= 15; i++) {
-      if (this.state === "end") {
-        dispatcher = connection.play("./music/end.ogg");
-        let embed = getEndEmbed(this.getTopPlayer());
-        message.channel.send(embed);
-        return dispatcher.on("finish", function() {
-          voiceChannel.leave();
-        });
-      }
-      dispatcher = connection.play("./music/" + getMusic(i, ""));
-      const msg = await message.channel.send(`:computer: LOADING QUESTION....`);
-      try {
-        await msg.react("🇦");
-        await msg.react("🇧");
-        await msg.react("🇨");
-        await msg.react("🇩");
-      } catch (err) {
-        console.log("One of the emojis failed to react.");
-      }
+    let question = this.questions[index];
+    let answer = question.answer;
+    editEmbed = new Discord.MessageEmbed()
+      .setColor("#53b512")
+      .setTitle("Câu hỏi số " + index)
+      .setTimestamp()
+      .setFooter(
+        "Ai la trieu phu",
+        "https://upload.wikimedia.org/wikipedia/en/f/fe/Vietnam_millionaire.JPG"
+      )
+      .setDescription(question.question)
+      .addField("Đáp án 🇦", question.A, true)
+      .addField("Đáp án 🇧", question.B, true)
+      .addField("\u200B", "\u200B")
+      .addField("Đáp án 🇨", question.C, true)
+      .addField("Đáp án 🇩", question.D, true);
 
-      let question = questions[i - 1];
-      let answer = question.answer;
-      let sendEmbed = new Discord.MessageEmbed()
-        .setColor("#53b512")
-        .setTitle("Câu hỏi số " + i)
+    await msg.edit(editEmbed);
+
+    let interval;
+    let time = 30;
+    let cdMsg = await this.message.channel.send(`Time left: ${time} seconds`);
+    interval = setInterval(function() {
+      cdMsg.edit(`Time left: ${time} seconds`);
+      time--;
+      if (time < 0) {
+        cdMsg.delete();
+        clearInterval(interval);
+      }
+    }, 1000);
+    //reset all voted
+    this.players.forEach(function(player) {
+      player.voted = null;
+    });
+
+    const filter = (reaction, user) => {
+      let player = this.players.get(user.id);
+      if (user.bot || (player && (player.voted || !player.alive)) || !player)
+        return false;
+      if (!["🇦", "🇧", "🇨", "🇩"].includes(reaction.emoji.name)) return false;
+      player.voted = reaction.emoji.name;
+      this.message.channel.send(`${user} voted ${reaction.emoji.name}`);
+      return true;
+    };
+
+    await msg.awaitReactions(filter, { time: time * 1000 });
+
+    this.players.forEach(function(player) {
+      if (!player.alive) return;
+      let userAnswer = player.voted;
+      player.currentQuestion = index;
+      switch (userAnswer) {
+        case "🇦":
+          userAnswer = "A";
+          break;
+        case "🇧":
+          userAnswer = "B";
+          break;
+        case "🇨":
+          userAnswer = "C";
+          break;
+        case "🇩":
+          userAnswer = "D";
+          break;
+        default:
+          userAnswer = null;
+      }
+      if (userAnswer != answer) player.alive = false;
+    });
+    let alivePlayers = this.players.filter(player => player.alive);
+    let embed = getAnswerEmbed(answer);
+    let answerMsg = await this.message.channel.send(embed);
+    setTimeout(function() {
+      msg.edit(
+        new Discord.MessageEmbed()
+          .setTitle(`Question ${index} has been hidden :V`)
+          .setColor("NAVY")
+      );
+      answerMsg.delete();
+    }, 10000);
+    await this.message.channel.send(
+      new Discord.MessageEmbed()
+        .setColor("#0099ff")
+        .setTitle("Người chơi tiếp: " + alivePlayers.size)
         .setTimestamp()
         .setFooter(
           "Ai la trieu phu",
           "https://upload.wikimedia.org/wikipedia/en/f/fe/Vietnam_millionaire.JPG"
         )
-        .setDescription(question.question)
-        .addField("Đáp án 🇦", question.A, true)
-        .addField("Đáp án 🇧", question.B, true)
-        .addField("\u200B", "\u200B")
-        .addField("Đáp án 🇨", question.C, true)
-        .addField("Đáp án 🇩", question.D, true);
-      await msg.edit(sendEmbed);
+        .addField(
+          "Danh sách",
+          alivePlayers.size > 0
+            ? alivePlayers.map(e => e.user).join("\n")
+            : "Đéo có ai :'("
+        )
+    );
+    setTimeout(() => {
+      if (alivePlayers.size == 0) this._end();
+      else this._play(index + 1);
+    }, 4000);
+  }
 
-      let interval;
-      let time = getTime(i) / 1000 - 1;
-      let cd = await message.channel.send(`Time left: ${time} seconds`);
-
-      interval = setInterval(function() {
-        cd.edit(`Time left: ${time} seconds`);
-        time--;
-        if (time < 0) {
-          cd.delete();
-          clearInterval(interval);
-        }
-      }, 1000);
-
-      players.forEach(function(player) {
-        player.voted = null;
-      });
-
-      const filter = (reaction, user) => {
-        let player = players.get(user.id);
-        if (user.bot || (player && (player.voted || !player.alive)) || !player)
-          return false;
-        if (!["🇦", "🇧", "🇨", "🇩"].includes(reaction.emoji.name))
-          return false;
-        player.voted = reaction.emoji.name;
-        message.channel.send(`${user} voted ${reaction.emoji.name}`);
-        return true;
-      };
-      await msg
-        .awaitReactions(filter, { time: getTime(i) })
-        .then(async collected => {
-          let correctAnswer = 0;
-          let wrongAnswer = 0;
-          players.forEach(function(player) {
-            if (!player.alive) return;
-            let userAnswer = player.voted;
-            player.currentQuestion = i;
-            switch (userAnswer) {
-              case "🇦":
-                userAnswer = "A";
-                break;
-              case "🇧":
-                userAnswer = "B";
-                break;
-              case "🇨":
-                userAnswer = "C";
-                break;
-              case "🇩":
-                userAnswer = "D";
-                break;
-              default:
-                userAnswer = null;
-            }
-            if (userAnswer != answer) {
-              player.alive = false;
-              wrongAnswer++;
-            } else correctAnswer++;
-          });
-          let alivePlayer = this.getAlivePlayer();
-          if (alivePlayer.length === 0) this.state = "end";
-          let fileName;
-          if (correctAnswer >= wrongAnswer) fileName = getMusic(i, "dung");
-          else fileName = getMusic(i, "sai");
-          await playSync(connection, "./music/" + fileName);
-          let embed = getAnswerEmbed(answer);
-          await message.channel.send(embed);
-          await message.channel.send(
-            new Discord.MessageEmbed()
-              .setColor("#0099ff")
-              .setTitle("Người chơi tiếp: " + alivePlayer.length)
-              .setTimestamp()
-              .setFooter(
-                "Ai la trieu phu",
-                "https://upload.wikimedia.org/wikipedia/en/f/fe/Vietnam_millionaire.JPG"
-              )
-              .addField(
-                "Danh sách",
-                alivePlayer.length > 0
-                  ? alivePlayer.map(e => e.name).join("\n")
-                  : "Đéo có ai :'("
-              )
-          );
-          await sleep(4000);
-        });
-    }
+  async play(message) {
+    this.message = message;
+    this.state = "playing";
+    this._play(1);
   }
 }
 module.exports = Game;
 
-function getMusic(i, state) {
-  switch (true) {
-    case i <= 5:
-      return "1-5" + state + ".ogg";
-    default:
-      return i + state + ".ogg";
-  }
-}
-function getTime(i) {
-  switch (true) {
-    case i <= 5:
-      return 15000;
-    case i <= 10:
-      return 20000 + i * 1000;
-    case i <= 15:
-      return 45000 + i * 1000;
-    default:
-      return 15000;
-  }
-}
 function getAnswerEmbed(answer) {
   const imgFile = new Discord.MessageAttachment("./image/" + answer + ".png");
   return new Discord.MessageEmbed()
@@ -195,16 +171,13 @@ function getAnswerEmbed(answer) {
 }
 function getEndEmbed(playerList) {
   playerList = [...playerList.values()];
-  playerList[0].name = " :first_place: " + playerList[0].name;
-  if (playerList.length > 1)
-    playerList[1].name = " :second_place: " + playerList[1].name;
-  if (playerList.length > 2)
-    playerList[2].name = " :third_place: " + playerList[2].name;
+  const emojis = [0, 0, 0];
+  for (let i of playerList) emojis.push(":poop:");
+  emojis[0] = ":first_place:";
+  emojis[1] = ":second_place:";
+  emojis[2] = ":third_place:";
   playerList = playerList.map(
-    (elem, index) =>
-      (index < 3 ? "**" + elem.name + "**" : index + 1 + " " + elem.name) +
-      " " +
-      elem.currentQuestion
+    (elem, index) => `${emojis[index]} ${elem.user} ${elem.currentQuestion} `
   );
   return new Discord.MessageEmbed()
     .setColor("#dbdb2c")
@@ -215,8 +188,4 @@ function getEndEmbed(playerList) {
       "https://upload.wikimedia.org/wikipedia/en/f/fe/Vietnam_millionaire.JPG"
     )
     .addField("Rank: ", playerList.join(" \n "));
-}
-async function playSync(voiceConnection, filepath) {
-  const player = voiceConnection.play(filepath);
-  await new Promise(resolve => player.on("finish", resolve));
 }

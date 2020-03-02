@@ -1,7 +1,5 @@
 const Discord = require("discord.js");
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
+
 module.exports = {
   name: "info",
   aliases: [],
@@ -9,27 +7,23 @@ module.exports = {
   description: "Info of this game",
   //   usage: '[command]',
   run: async (client, message, args) => {
-    let guild = client.guilds.cache.get(message.guild.id);
-    let game = guild.game;
+    let game = message.guild.game;
     let state = game ? game.state : null;
-    if (state == null) {
+    if (state == null || state == "preInit") {
       message.reply("game not setup yet");
       return;
     }
     let currentQuestion = game.currentQuestion;
+    let totalQuestion = game.config.numberQuestions;
     let playersList = game
       .getTopPlayer()
-      .map(e => `${e.name} ${e.alive ? "✅" : ":x:"}   ${e.currentQuestion}`);
+      .map(e => `${e.currentQuestion} ${e.user} ${e.alive ? "✅" : ":x:"}\n`);
     await message.channel.send(
       new Discord.MessageEmbed()
         .setColor("#28f7dc")
         .setTitle("Thông tin")
         .setTimestamp()
-        .setFooter(
-          "Ai la trieu phu",
-          "https://upload.wikimedia.org/wikipedia/en/f/fe/Vietnam_millionaire.JPG"
-        )
-        .addField("Câu hỏi hiện tại:", currentQuestion)
+        .addField("Câu hỏi hiện tại:", currentQuestion + "/" + totalQuestion)
         .addField("Danh sách người chơi:", playersList)
     );
   }

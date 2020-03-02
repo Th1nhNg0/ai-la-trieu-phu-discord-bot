@@ -16,6 +16,7 @@ async function checkDb() {
   let response_code = response.data.response_code;
   return response_code == 0;
 }
+
 function shuffle(a) {
   for (let i = a.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -23,8 +24,8 @@ function shuffle(a) {
   }
   return a;
 }
-async function getQuestions(amount = 15) {
-  const url = `https://opentdb.com/api.php?amount=${amount}&category=15&difficulty=easy&type=multiple&encode=url3986`;
+async function getQuestions({ amount = 15, category = "", difficulty = "" }) {
+  const url = `https://opentdb.com/api.php?amount=${amount}&category=${category}&difficulty=${difficulty}&type=multiple&encode=url3986`;
   let response = await axios.get(url);
   response = response.data.results;
   let results = [];
@@ -51,7 +52,16 @@ async function getCategory() {
   response = response.data.trivia_categories;
   return response;
 }
+
+async function getCategoryName(id) {
+  let c = await getCategory();
+  let res = c.find(e => e.id == id);
+  if (!res) return "ALL";
+  return res.name;
+}
+
 module.exports = {
+  getCategoryName,
   getQuestions,
   checkDb,
   getCategory

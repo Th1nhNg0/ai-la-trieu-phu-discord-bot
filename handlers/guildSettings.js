@@ -8,6 +8,15 @@ module.exports = async client => {
   await guildModel.saveAllGuildSettingsToDatabase(client.guilds.cache);
   let guildSettings = await guildModel.loadGuildSettings();
   for (let guild of guildSettings) {
+    guild = guild.toObject();
+    guild.id = guild._id;
+    delete guild._id;
+    guild.gameConfig = {
+      category: 27,
+      categoryName: "Animals",
+      difficulty: "hard",
+      numberQuestions: 5
+    };
     client.guildSettings.set(guild.id, guild);
   }
   for (let guild of client.guilds.cache) {
