@@ -2,11 +2,14 @@ const Discord = require("discord.js");
 const mongoose = require("mongoose");
 const timestamps = require("mongoose-timestamp");
 
-const guildSchema = new mongoose.Schema({
-  _id: { type: String, required: true, unique: true },
-  prefix: String,
-  gameDatabase: String
-});
+const guildSchema = new mongoose.Schema(
+  {
+    id: { type: String, required: true, unique: true, index: true },
+    prefix: String,
+    gameDatabase: String
+  },
+  { _id: false }
+);
 guildSchema.plugin(timestamps);
 const GuildSettings = mongoose.model("guildSettings", guildSchema);
 
@@ -23,7 +26,7 @@ async function saveAllGuildSettingsToDatabase(guilds) {
   let ok = 0;
   for (let guild of guilds) {
     try {
-      let newGuildSettings = new GuildSettings({ _id: guild[0], prefix: "!" });
+      let newGuildSettings = new GuildSettings({ id: guild[0], prefix: "!" });
       await newGuildSettings.save();
       ok++;
     } catch (e) {}

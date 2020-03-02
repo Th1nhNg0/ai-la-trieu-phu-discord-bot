@@ -5,6 +5,7 @@ require("dotenv").config();
 
 process.env.NODE_PATH = __dirname;
 const mongoose = require("mongoose");
+const userModel = require("./model/user");
 
 client.guildSettings = new Discord.Collection();
 client.commands = new Discord.Collection();
@@ -28,11 +29,23 @@ client.on("ready", () => {
   console.log(`Hi, ${client.user.username} is now online!`);
   client.user.setPresence({
     status: "online",
-    game: {
+    activity: {
       name: "me getting developed",
       type: "PLAYING"
     }
   });
+  let presencesGuild = client.guilds.cache.map(e => e.presences.cache);
+  for (let presences of presencesGuild) checkFukingtime(presences);
+  function checkFukingtime(presencesList) {
+    presencesList = presencesList.filter(e => !e.user.bot);
+    presencesList.each(userPresence => {
+      let activities = userPresence.activities;
+      let userID = userPresence.userID;
+      userModel.updatePresenceTime(userID, activities, 1);
+    });
+    console.log(`UPDATED precense or ${presencesList.size} users!`);
+    setTimeout(checkFukingtime.bind(null, presencesList), 1 * 60000);
+  }
 });
 
 client.on("message", async message => {
