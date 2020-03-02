@@ -17,22 +17,28 @@ module.exports = {
             "Category:",
             `ID:${config.category}| Name:${config.categoryName}`
           )
-          .addField("difficulty", config.difficulty)
+          .addField("difficulty", config.difficulty ? config.difficulty : "ALL")
           .addField("Total questions", config.numberQuestions)
       );
     }
     if (args[0] == "get") {
-      let categorys = await questionsModel.getCategory();
+      let categorys = await questionsModel.getCategoryDetail();
       let embed = new Discord.MessageEmbed()
         .setTitle("CATEGORY")
         .setColor("RED");
       for (let car of categorys) {
-        embed.addField(car.name, `ID:  ${car.id}`, true);
+        embed.addField(
+          `**${car.id}**.  ${car.name}`,
+          `Easy: ${car.category_question_count.total_easy_question_count}
+        Medium: ${car.category_question_count.total_medium_question_count}
+        Hard: ${car.category_question_count.total_hard_question_count}`,
+          true
+        );
       }
       return message.channel.send(embed);
     }
     if (args[0] == "set") {
-      if (args.length <= 1)
+      if (args.length <= 2)
         return message.reply("WHAT THE FUCK IS THE VARIBLE AND VALUE?");
       let varible = args[1].toLowerCase();
       let value = args[2].toLowerCase();
@@ -43,10 +49,13 @@ module.exports = {
         return message.reply(`Set ${varible} to ${config.categoryName}`);
       }
       if (varible == "difficulty") {
-        if (["easy", "medium", "hard"].includes(value)) {
-          config[varible] = value;
-          return message.reply(`Set ${varible} to ${config[varible]}`);
+        config[varible] = value;
+        if (!["easy", "medium", "hard"].includes(value)) {
+          config[varible] = undefined;
         }
+        return message.reply(
+          `Set ${varible} to ${config.difficulty ? config.difficulty : "ALL"}`
+        );
       }
       if (varible == "totalques") {
         if (value > 0 && value <= 50) {

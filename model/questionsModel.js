@@ -45,6 +45,19 @@ async function getQuestions({ amount = 15, category = "", difficulty = "" }) {
   }
   return results;
 }
+async function getCategoryDetail() {
+  let category = await getCategory();
+  let promises = [];
+  for (let x of category)
+    promises.push(
+      axios.get(`https://opentdb.com/api_count.php?category=${x.id}`)
+    );
+  let response = await Promise.all(promises);
+  let datas = response.map(e => e.data);
+  for (let i = 0; i < category.length; i++)
+    category[i].category_question_count = datas[i].category_question_count;
+  return category;
+}
 
 async function getCategory() {
   let url = "https://opentdb.com/api_category.php";
@@ -64,5 +77,6 @@ module.exports = {
   getCategoryName,
   getQuestions,
   checkDb,
+  getCategoryDetail,
   getCategory
 };
