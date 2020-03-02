@@ -1,6 +1,7 @@
 # QUIZZ DISCORD BOT
 
 Discord bot for quizz game with sound effect
+![Image description](./image/demo.png)
 
 ## Getting Started
 
