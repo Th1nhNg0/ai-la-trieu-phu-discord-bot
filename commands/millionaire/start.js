@@ -77,6 +77,8 @@ async function setup(client, message) {
     throw message.reply("No one want to play :((");
   }
   game.init(players);
+  if (game.questions.length == 0)
+    return "SOMETHING ERRORS WITH THE QUESTIONS :) PLEASE CHANGE ";
   const embed2 = new Discord.MessageEmbed()
     .setColor("#a3b5a5")
     .setTitle('Ai là triệu phú <(")')
