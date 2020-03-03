@@ -34,18 +34,23 @@ client.on("ready", () => {
       type: "PLAYING"
     }
   });
-  let presencesGuild = client.guilds.cache.map(e => e.presences.cache);
-  for (let presences of presencesGuild) checkFukingtime(presences);
-  function checkFukingtime(presencesList) {
-    presencesList = presencesList.filter(e => !e.user.bot);
-    presencesList.each(userPresence => {
-      let activities = userPresence.activities;
-      let userID = userPresence.userID;
-      userModel.updatePresenceTime(userID, activities, 1);
-    });
-    console.log(`UPDATED precense or ${presencesList.size} users!`);
-    setTimeout(checkFukingtime.bind(null, presencesList), 1 * 60000);
-  }
+
+  let timeUpdate = 1; //minute
+  client.setInterval(function() {
+    let presencesGuild = client.guilds.cache.map(e => e.presences.cache);
+    for (let presences of presencesGuild) checkFukingtime(presences);
+    function checkFukingtime(presencesList) {
+      presencesList = presencesList.filter(
+        e => !e.user.bot && e.activities.length > 0
+      );
+      presencesList.each(userPresence => {
+        let activities = userPresence.activities;
+        let userID = userPresence.userID;
+        userModel.updatePresenceTime(userID, activities, timeUpdate);
+      });
+      console.log(`$ UPDATED precense or ${presencesList.size} users!`);
+    }
+  }, timeUpdate * 60000);
 });
 
 client.on("message", async message => {
