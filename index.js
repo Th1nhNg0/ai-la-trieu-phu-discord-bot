@@ -37,19 +37,15 @@ client.on("ready", () => {
 
   let timeUpdate = 1; //minute
   client.setInterval(function() {
-    let presencesGuild = client.guilds.cache.map(e => e.presences.cache);
-    for (let presences of presencesGuild) checkFukingtime(presences);
-    function checkFukingtime(presencesList) {
-      presencesList = presencesList.filter(
-        e => !e.user.bot && e.activities.length > 0
-      );
-      presencesList.each(userPresence => {
-        let activities = userPresence.activities;
-        let userID = userPresence.userID;
-        userModel.updatePresenceTime(userID, activities, timeUpdate);
-      });
-      console.log(`$ UPDATED precense or ${presencesList.size} users!`);
-    }
+    let user = client.users.cache;
+    user = user.filter(e => !e.bot && e.presence.status !== "offline");
+    let precenses = user.map(e => e.presence);
+    precenses.forEach(precense => {
+      let activities = precense.activities;
+      let userID = precense.userID;
+      userModel.updatePresenceTime(userID, activities, timeUpdate);
+    });
+    console.log(`$ UPDATED precense or ${precenses.length} users!`);
   }, timeUpdate * 60000);
 });
 
