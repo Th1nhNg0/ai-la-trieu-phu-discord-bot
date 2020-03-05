@@ -35,7 +35,7 @@ client.on("ready", () => {
     }
   });
 
-  let timeUpdate = 5; //minute
+  let timeUpdate = 1; //minute
   client.setInterval(function() {
     let user = client.users.cache;
     user = user.filter(e => !e.bot && e.presence.status !== "offline");
@@ -46,7 +46,7 @@ client.on("ready", () => {
       userModel.updatePresenceTime(userID, activities, timeUpdate);
     });
     console.log(`$ UPDATED precense or ${precenses.length} users!`);
-  }, timeUpdate * 1000);
+  }, timeUpdate * 60000);
 });
 
 client.on("message", async message => {
