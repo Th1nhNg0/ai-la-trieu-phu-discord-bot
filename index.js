@@ -52,7 +52,7 @@ client.on("ready", () => {
 client.on("message", async message => {
   const prefix = client.guildSettings.get(message.guild.id)
     ? client.guildSettings.get(message.guild.id).prefix
-    : "`";
+    : "!";
 
   if (message.author.bot) return;
   if (message.mentions.has(client.user)) {
