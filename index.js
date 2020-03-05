@@ -35,7 +35,7 @@ client.on("ready", () => {
     }
   });
 
-  let timeUpdate = 1; //minute
+  let timeUpdate = 5; //minute
   client.setInterval(function() {
     let user = client.users.cache;
     user = user.filter(e => !e.bot && e.presence.status !== "offline");
@@ -46,13 +46,13 @@ client.on("ready", () => {
       userModel.updatePresenceTime(userID, activities, timeUpdate);
     });
     console.log(`$ UPDATED precense or ${precenses.length} users!`);
-  }, timeUpdate * 60000);
+  }, timeUpdate * 1000);
 });
 
 client.on("message", async message => {
   const prefix = client.guildSettings.get(message.guild.id)
     ? client.guildSettings.get(message.guild.id).prefix
-    : "!";
+    : "`";
 
   if (message.author.bot) return;
   if (message.mentions.has(client.user)) {

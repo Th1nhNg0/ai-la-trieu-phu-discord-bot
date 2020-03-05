@@ -13,9 +13,9 @@ module.exports = {
       .setAuthor(user.username)
       .setTimestamp()
       .setThumbnail(user.avatarURL());
-    let activity = await userModel.getActivity(user.id);
-    for (let e of activity) {
-      embed.addField(e.name, e.totalMinute + " min", true);
+    let activities = await userModel.getAllTimeActivity(user.id);
+    for (let activity of activities) {
+      embed.addField(activity.name, activity.time + " min", true);
     }
     message.channel.send(embed);
   }
