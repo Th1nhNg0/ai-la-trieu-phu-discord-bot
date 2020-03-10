@@ -5,11 +5,10 @@ table.setHeading("Guilds Name", "Load status");
 const guildModel = require("../model/guildModel.js");
 
 module.exports = async client => {
-  // await guildModel.saveAllGuildSettingsToDatabase(client.guilds.cache);
+  await guildModel.saveAllGuildSettingsToDatabase(client.guilds.cache);
   let guildSettings = await guildModel.loadGuildSettings();
   for (let guild of guildSettings) {
     guild = guild.toObject();
-    guild.id = guild._id;
     delete guild._id;
     guild.gameConfig = {
       category: 27,
