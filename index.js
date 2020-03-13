@@ -81,7 +81,7 @@ client.on("message", async message => {
 });
 
 client.on("voiceStateUpdate", async (oldState, newState) => {
-  if (newState.channelID) {
+  if (!oldState.channelID && newState.channelID) {
     let connection = await newState.channel.join();
     let dispatcher = connection.play("./music/vitas.mp3");
     dispatcher.on("finish", () => {
