@@ -10,14 +10,14 @@ module.exports = {
     const user = message.mentions.users.first() || message.author;
     const embed = new Discord.MessageEmbed()
       .setColor(0x333333)
-      .setAuthor(user.username)
+      .setTitle(user.username)
       .setTimestamp()
       .setThumbnail(user.avatarURL());
     let activities = await userModel.getAllTimeActivity(user.id);
     sum = activities.reduce((pl, cur) => pl + cur.time, 0);
     embed.addField("TOTAL:", convertTime(sum));
     for (let activity of activities) {
-      embed.addField(activity.name, convertTime(activity.time), true);
+      embed.addField(activity.name, activity.time + " min", true);
     }
     message.channel.send(embed);
   },
