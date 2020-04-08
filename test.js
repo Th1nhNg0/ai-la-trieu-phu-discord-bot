@@ -1,21 +1,13 @@
-var mysql = require("mysql");
-var connection = mysql.createConnection({
-  host: "104.129.2.56",
-  user: "root",
-  password: "Fuckyou@2"
-});
+function convertTime(minutes) {
+  day = ~~(minutes / (60 * 24));
+  minutes %= 60 * 24;
+  hour = ~~(minutes / 60);
+  minutes %= 60;
+  str = "";
+  str += day > 0 ? day + " day " : "";
+  str += hour > 0 ? hour + " hour " : "";
+  str += minutes > 0 ? minutes + " minutes " : "";
+  return str;
+}
 
-connection.connect(function(err) {
-  if (err) {
-    console.error("error connecting: " + err.stack);
-    return;
-  }
-
-  console.log("connected as id " + connection.threadId);
-});
-connection.query("SELECT 1 + 1 AS solution", function(error, results, fields) {
-  if (error) throw error;
-  console.log("The solution is: ", results[0].solution);
-});
-
-connection.end();
+console.log(convertTime(125413));

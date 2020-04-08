@@ -13,7 +13,7 @@ client.aliases = new Discord.Collection();
 client.categories = fs.readdirSync("./commands/");
 
 client.on("ready", () => {
-  ["command", "guildSettings"].forEach(handler => {
+  ["command", "guildSettings"].forEach((handler) => {
     require(`./handlers/${handler}`)(client);
   });
 
@@ -22,25 +22,25 @@ client.on("ready", () => {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true,
-      useFindAndModify: true
+      useFindAndModify: true,
     })
     .then(() => console.log("DATABASE CONNECTED"))
-    .catch(e => console.log("DATABASE ERROR\n", e));
+    .catch((e) => console.log("DATABASE ERROR\n", e));
   console.log(`Hi, ${client.user.username} is now online!`);
   client.user.setPresence({
     status: "online",
     activity: {
       name: "me getting developed",
-      type: "PLAYING"
-    }
+      type: "PLAYING",
+    },
   });
 
   let timeUpdate = 1; //minute
-  client.setInterval(function() {
+  client.setInterval(function () {
     let user = client.users.cache;
-    user = user.filter(e => !e.bot && e.presence.status !== "offline");
-    let precenses = user.map(e => e.presence);
-    precenses.forEach(precense => {
+    user = user.filter((e) => !e.bot && e.presence.status !== "offline");
+    let precenses = user.map((e) => e.presence);
+    precenses.forEach((precense) => {
       let activities = precense.activities;
       let userID = precense.userID;
       userModel.updatePresenceTime(userID, activities, timeUpdate);
@@ -49,13 +49,13 @@ client.on("ready", () => {
   }, timeUpdate * 60000);
 });
 
-client.on("message", async message => {
+client.on("message", async (message) => {
   const prefix = client.guildSettings.get(message.guild.id)
     ? client.guildSettings.get(message.guild.id).prefix
     : "!";
 
   if (message.author.bot) return;
-  if (message.mentions.has(client.user)) {
+  if (message.mentions.has(client.user) && !message.mentions.everyone) {
     return message.channel.send(`${message.author} my prefix is ${prefix}`);
   }
   if (!message.guild) return;
@@ -63,10 +63,7 @@ client.on("message", async message => {
   if (!message.member)
     message.member = await message.guild.fetchMember(message);
 
-  const args = message.content
-    .slice(prefix.length)
-    .trim()
-    .split(/ +/g);
+  const args = message.content.slice(prefix.length).trim().split(/ +/g);
   const cmd = args.shift().toLowerCase();
 
   if (cmd.length === 0) return;

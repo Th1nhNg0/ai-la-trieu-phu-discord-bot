@@ -14,9 +14,23 @@ module.exports = {
       .setTimestamp()
       .setThumbnail(user.avatarURL());
     let activities = await userModel.getAllTimeActivity(user.id);
+    sum = activities.reduce((pl, cur) => pl + cur.time, 0);
+    embed.addField("TOTAL:", convertTime(sum));
     for (let activity of activities) {
-      embed.addField(activity.name, activity.time + " min", true);
+      embed.addField(activity.name, convertTime(activity.time), true);
     }
     message.channel.send(embed);
-  }
+  },
 };
+
+function convertTime(minutes) {
+  day = ~~(minutes / (60 * 24));
+  minutes %= 60 * 24;
+  hour = ~~(minutes / 60);
+  minutes %= 60;
+  str = "";
+  str += day > 0 ? day + " day " : "";
+  str += hour > 0 ? hour + " hour " : "";
+  str += minutes > 0 ? minutes + " minutes " : "";
+  return str;
+}
